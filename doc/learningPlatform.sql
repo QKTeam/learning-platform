@@ -11,6 +11,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`user` (
 	`username` VARCHAR(50) NOT NULL, -- 用户名，英文开头，只包含英文和数字，长度不超过30
 	`password` VARCHAR(50) NOT NULL, -- 密码，采用sha1(用户名+md5(原密码))加密，md5由前端Angular加密传输
 	`email` VARCHAR(100) NOT NULL, -- 邮箱
+	`phone` VARCHAR(20) NOT NULL, -- 联系电话
 	`gender` INT(1) NOT NULL, -- 性别 0（男）或1（女）
 	`studentId` VARCHAR(30) NOT NULL, -- 学号
 	`roleId` INT NOT NULL DEFAULT 4, -- 角色（对应role表中rid）
