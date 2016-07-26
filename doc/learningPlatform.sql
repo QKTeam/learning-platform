@@ -13,7 +13,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`user` (
 	`email` VARCHAR(100) NOT NULL, -- 邮箱
 	`gender` INT(1) NOT NULL, -- 性别 0（男）或1（女）
 	`studentId` VARCHAR(30) NOT NULL, -- 学号
-	`roleId` INT NOT NULL, -- 角色（对应role表中rid）
+	`roleId` INT NOT NULL DEFAULT 4, -- 角色（对应role表中rid）
 	PRIMARY KEY (`uid`),
 	UNIQUE INDEX `uid_UNIQUE` (`uid` ASC)
 )ENGINE = InnoDB;
@@ -42,6 +42,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`course` (
 	`updateTime` INT NOT NULL, -- 修改时间，秒级
 	`name` VARCHAR(50) NOT NULL, -- 课程名称
 	`content` TEXT NOT NULL, -- 课程内容
+	`visibility` INT NOT NULL DEFAULT 0, -- 可见性，0隐藏，1可见，-1删除
 	PRIMARY KEY (`cid`),
 	UNIQUE INDEX `cid_UNIQUE` (`cid` ASC)
 )ENGINE = InnoDB;
@@ -58,6 +59,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 	`content` TEXT NOT NULL, -- 知识点内容
 	`courseId` INT NOT NULL, -- 属于的课程id
 	`order` INT NOT NULL DEFAULT 0, -- 排序顺序，`order`相同则按照`pid`排序
+	`visibility` INT NOT NULL DEFAULT 0, -- 可见性，0隐藏，1可见，-1删除
 	PRIMARY KEY (`pid`),
 	UNIQUE INDEX `pid_UNIQUE` (`pid` ASC)
 )ENGINE = InnoDB;
