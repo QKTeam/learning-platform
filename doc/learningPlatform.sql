@@ -40,7 +40,7 @@ INSERT INTO `learningPlatform`.`role` VALUES (4, '游客');
 CREATE  TABLE IF NOT EXISTS `learningPlatform`.`course` (
 	`cid` INT NOT NULL AUTO_INCREMENT,
 	`ownerId` INT NOT NULL, -- 创建人uid
-	`createTime` INT NOT NULL, -- 创建世界，秒级
+	`createTime` INT NOT NULL, -- 创建时间，秒级
 	`updateTime` INT NOT NULL, -- 修改时间，秒级
 	`name` VARCHAR(50) NOT NULL, -- 课程名称
 	`content` TEXT NOT NULL, -- 课程内容
@@ -54,7 +54,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`course` (
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 	`pid` INT NOT NULL AUTO_INCREMENT,
-	`createTime` INT NOT NULL, -- 创建世界，秒级
+	`createTime` INT NOT NULL, -- 创建时间，秒级
 	`updateTime` INT NOT NULL, -- 修改时间，秒级
 	`importance` INT(1) NOT NULL DEFAULT 0, -- 重要性，[0-5]表示[0-5]个感叹号
 	`name` VARCHAR(50) NOT NULL, -- 知识点名称
@@ -71,7 +71,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `learningPlatform`.`log` (
 	`lid` INT NOT NULL AUTO_INCREMENT,
-	`createTime` INT NOT NULL, -- 创建世界，秒级
+	`createTime` INT NOT NULL, -- 创建时间，秒级
 	`userId` INT NOT NULL,
 	`pointId` INT NOT NULL,
 	`status` INT(1) NOT NULL DEFAULT 0, -- 0学习中  1学习完成
@@ -84,7 +84,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`log` (
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `learningPlatform`.`discuss` (
 	`did` INT NOT NULL AUTO_INCREMENT,
-	`createTime` INT NOT NULL, -- 创建世界，秒级
+	`createTime` INT NOT NULL, -- 创建时间，秒级
 	`updateTime` INT NOT NULL, -- 修改时间，秒级
 	`title` VARCHAR(50) NOT NULL, -- 讨论标题
 	`content` TEXT NOT NULL, -- 讨论内容
