@@ -39,6 +39,7 @@ INSERT INTO `learningPlatform`.`role` VALUES (4, '游客');
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `learningPlatform`.`course` (
 	`cid` INT NOT NULL AUTO_INCREMENT,
+	`ownerId` INT NOT NULL, -- 创建人uid
 	`createTime` INT NOT NULL, -- 创建世界，秒级
 	`updateTime` INT NOT NULL, -- 修改时间，秒级
 	`name` VARCHAR(50) NOT NULL, -- 课程名称
