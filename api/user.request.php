@@ -1,6 +1,7 @@
 <?php
 
 require_once('user.class.php');
+require_once('site.class.php');
 if($action[1]=='signup')
 {
 	$currentuser=new User;
@@ -42,18 +43,35 @@ if(!checkAuthority())
 switch($action[1])
 {
 	case 'signout':
-	require_once('site.class.php');
-	Site::clearSession();
-	handle('0000');
+		Site::clearSession();
+		handle('0000');
 	break;
-	case 'show':
-	$currentuser=new User;
-	$currentuser->uid=getRequest('uid');
-	if(($currentuser->show())==false)
-		handle(ERROR_SYSTEM.'00');
-	else 
-		handle('0000{"username":'.$currentuser->uid.'}');
+
+	case 'list':
+		$uid=getRequest('uid');
+		
+		$nowUser=User::show(Site::getSessionUid());
+		$nowRoleId=$nowUser[0]['roleId'];
+		$response=User::list(getRequest('username'),getRequest('studentId'),getRequest('roleId'));
+
+		if($nowRoleId==1||$nowRoleId==2)
+		{
+			if($response==false)
+				handle('0000');
+			handle('0000'.json_encode($response));
+		}
+		else 
+		{
+			foreach ($response as &$i) {
+				unset($i['password']);
+				unset($i['phone']);
+				unset($i['studentId']);
+			}
+			handle('0000'.json_encode($response));
+		}
+		
 	break;
+
 
 }
 
