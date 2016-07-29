@@ -4,7 +4,7 @@ class User
 {
 	public $uid;
 	public $username;
-	private $password;
+	public $password;
 	private $email;
 	private $phone;
 	private $gender;
@@ -26,15 +26,21 @@ class User
 		global $pdo;
 		$username=$this->username;
 		$password=$this->password;
-		$sqlUser=$pdo->prepare('SELECT `password` FROM `user` WHERE `username` = :user ;');
+		$sqlUser=$pdo->prepare('SELECT * FROM `user` WHERE `username` = :username ;');
 		$sqlUser->bindValue(':username',urlencode($username),PDO::PARAM_STR);
 		$sqlUser->execute();
-		if($sqlUser->rowCount()==0)
-			return -1;
-		if($sqlUser['password']==sha1($username.$password))
-			return $sqlUser['uid'];
+
+		if( ($response = $sqlUser->fetch(PDO::FETCH_ASSOC)) ==false )
+			{
+					echo $response['password'];
+					var_dump($response);
+					return -1;
+			}
+		
+		if($response['password']==sha1($username.$password))
+			return $response['uid'];
 		else 
-			return 0;
+			return 0; 
 	}
 
 	public function create()
@@ -68,6 +74,21 @@ class User
 		}
 	}
 	
+	public function show()
+	{
+		global $pdo;
+		$sqlUser=$pdo->prepare('SELECT * FROM `user` WHERE `uid`=:uid ;');
+		$sqlUser->bindValue(':uid',(int)$this->uid,PDO::PARAM_INT);
+		$sqlUser->execute();
+		if( ($response=$sqlUser->fetch(PDO::FETCH_ASSOC)) == false )
+		{
+			return false;
+		}
+		$this->username=$response('username');	
+		return true;
+		
+	}
+
 	public function delete()
 	{
 		global $pdo;

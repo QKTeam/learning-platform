@@ -10,7 +10,7 @@ $action = [];
 function analyseAddress() {
 	global $action, $request;
 	$action = explode('/', explode('?', substr($_SERVER['REQUEST_URI'], 5))[0]);
-	 var_dump($action);
+	 
 	$request = json_decode(file_get_contents('php://input', 'r'), true);
 }
 

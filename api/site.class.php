@@ -9,6 +9,7 @@ class Site {
 		return $_SESSION['user']['uid'];
 	}
 	public function writeInSession($uid) {
+		echo $uid;
 		$_SESSION['user']['lastActiveTime'] = strtotime('now');
 		return $_SESSION['user']['uid'] = (int)$uid;
 	}
