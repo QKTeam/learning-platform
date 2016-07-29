@@ -59,7 +59,7 @@ class User
 		$sqlUser->bindValue(':username',urlencode($this->username),PDO::PARAM_STR);
 		$sqlUser->bindValue(':password',urlencode($this->password),PDO::PARAM_STR);
 		$sqlUser->bindValue(':email',urlencode($this->email),PDO::PARAM_STR);
-		$sqlUser->bindValue(':phone',(int)($this->phone),PDO::PARAM_INT);
+		$sqlUser->bindValue(':phone',urlencode($this->phone),PDO::PARAM_STR);
 		$sqlUser->bindValue(':gender',(int)($this->gender),PDO::PARAM_INT);
 		$sqlUser->bindValue(':studentId',urlencode($this->studentId),PDO::PARAM_STR);
 		$sqlUser->bindValue(':roleId',(int)($this->roleId),PDO::PARAM_INT);
@@ -74,20 +74,44 @@ class User
 		}
 	}
 	
-	public function show()
+	public function show($id)
 	{
 		global $pdo;
-		$sqlUser=$pdo->prepare('SELECT * FROM `user` WHERE `uid`=:uid ;');
-		$sqlUser->bindValue(':uid',(int)$this->uid,PDO::PARAM_INT);
-		$sqlUser->execute();
-		if( ($response=$sqlUser->fetch(PDO::FETCH_ASSOC)) == false )
+		if($id!=0)
+		{
+			$sqlUser=$pdo->prepare('SELECT * FROM `user` WHERE `uid`=:uid ;');
+			$sqlUser->bindValue(':uid',(int)$id,PDO::PARAM_INT);
+			$sqlUser->execute();
+		}
+		else 
+		{
+			$sqlUser=$pdo->prepare('SELECT * FROM `user`;');
+			$sqlUser->bindValue(':uid',(int)$id,PDO::PARAM_INT);
+			$sqlUser->execute();	
+		}
+		if( ($response=$sqlUser->fetchall(PDO::FETCH_ASSOC)) == false )
 		{
 			return false;
 		}
-		$this->username=$response('username');	
-		return true;
-		
+		return $response;
 	}
+
+	public function list($username,$studentId,$roleId)
+	{
+		global $pdo;
+	
+		$sqlUser=$pdo->prepare('SELECT * FROM `user` WHERE `username` like :username AND `studentId` LIKE :studentId AND `roleId` LIKE :roleId;');
+		$sqlUser->bindValue(':username','%'.urlencode($username).'%',PDO::PARAM_STR);
+		$sqlUser->bindValue(':studentId','%'.urlencode($studentId).'%',PDO::PARAM_STR);
+		$sqlUser->bindValue(':roleId','%'.urlencode($roleId).'%',PDO::PARAM_STR);
+		$sqlUser->execute();
+		
+		if( ($response=$sqlUser->fetchall(PDO::FETCH_ASSOC)) == false )
+		{
+			return false;
+		}
+		return $response;
+	}	
 
 	public function delete()
 	{
