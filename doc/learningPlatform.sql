@@ -74,6 +74,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`log` (
 	`createTime` INT NOT NULL, -- 创建时间，秒级
 	`userId` INT NOT NULL,
 	`pointId` INT NOT NULL,
+	`courseId` INT NOT NULL,
 	`status` INT(1) NOT NULL DEFAULT 0, -- 0学习中  1学习完成
 	PRIMARY KEY (`lid`),
 	UNIQUE INDEX `lid_UNIQUE` (`lid` ASC)
@@ -84,6 +85,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`log` (
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `learningPlatform`.`discuss` (
 	`did` INT NOT NULL AUTO_INCREMENT,
+	`userId` INT NOT NULL, -- 创建用户id
 	`createTime` INT NOT NULL, -- 创建时间，秒级
 	`updateTime` INT NOT NULL, -- 修改时间，秒级
 	`title` VARCHAR(50) NOT NULL, -- 讨论标题
