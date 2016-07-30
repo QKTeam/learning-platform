@@ -36,19 +36,9 @@ if($action[1]=='signin')
 		handle('0000{"uid":'.$response.'}');
 	}
 }
-
-if(!checkAuthority())
-	handle(ERROR_PERMISSION.'01');
-
-switch($action[1])
+if($action[1]=='list')
 {
-	case 'signout':
-		Site::clearSession();
-		handle('0000');
-	break;
-
-	case 'list':
-		$uid=getRequest('uid');
+	$uid=getRequest('uid');
 		
 		$nowUser=User::show(Site::getSessionUid());
 		$nowRoleId=$nowUser[0]['roleId'];
@@ -58,10 +48,14 @@ switch($action[1])
 		{
 			if($response==false)
 				handle('0000');
-			handle('0000'.json_encode($response));
+			else 
+				handle('0000'.json_encode($response));
 		}
 		else 
 		{
+			if($response==false)
+				handle('0000');
+			
 			foreach ($response as &$i) {
 				unset($i['password']);
 				unset($i['phone']);
@@ -69,10 +63,18 @@ switch($action[1])
 			}
 			handle('0000'.json_encode($response));
 		}
-		
-	break;
-
-
 }
 
+if(!checkAuthority())
+	handle(ERROR_PERMISSION.'01');
+
+if($action[1]=='signout')
+{		
+	Site::clearSession();
+	handle('0000');
+}
+else
+{
+	handle(ERROR_INPUT,'02');
+}
 ?>
