@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="learningPlatform">
+	<head>
+		<meta charset="utf-8">
+		<title>{{$root.globalData.siteName}}</title>
+		<base href="/">
+		<link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+		<script src="//cdn.bootcss.com/angular.js/1.5.5/angular.min.js"></script>
+		<script src="//cdn.bootcss.com/angular.js/1.5.5/angular-route.min.js"></script>
+		<script src="//cdn.bootcss.com/angular-ui-router/0.3.0/angular-ui-router.min.js"></script>
+		<script src="//cdn.bootcss.com/angular.js/1.5.5/angular-animate.min.js"></script>
+		<script src="//cdn.bootcss.com/angular-ui-bootstrap/1.3.2/ui-bootstrap.min.js"></script>
+		<script src="//cdn.bootcss.com/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.min.js"></script>
+		<script src="//cdn.bootcss.com/blueimp-md5/2.3.0/js/md5.js"></script>
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+		<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script src="static/js/main.js.php"></script>
+		<link href="static/css/main.css" rel="stylesheet">
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-static-top" ng-controller="nav">
+			<div class="container">
+				<div class="navbar-header navbar-left">
+					<a class="navbar-brand" ui-sref="index">{{$root.globalData.siteName}}</a>
+					<ul class="nav navbar-nav">
+						<li ng-class="{'active':$root.$state.includes('course')}"><a ui-sref="course.search({ownerId:0})">课程列表</a></li>
+						<form class="navbar-form navbar-left" onsubmit="return false;">
+							<div class="form-group">
+								<select class="form-control" ng-options="teacher.uid as teacher.username for teacher in teachers" ng-model="searchKey.ownerId"></select>
+								<input type="text" class="form-control" placeholder="搜索课程名字" ng-model="searchKey.name">
+							</div>
+							<button type="submit" class="btn btn-default" ng-click="search()">搜索</button>
+						</form>
+					</ul>
+				</div>
+				<div class="navbar-header navbar-right" ng-if="!$root.sessionData.signin">
+					<ul class="nav navbar-nav">
+						<li ng-class="{'active':$root.$state.includes('signin')}"><a ui-sref="signin">登录</a></li>
+						<li ng-class="{'active':$root.$state.includes('signup')}"><a ui-sref="signup">注册</a></li>
+					</ul>
+				</div>
+				<div class="navbar-header navbar-right" ng-if="$root.sessionData.signin">
+					<ul class="nav navbar-nav">
+						<li ng-class="{'active':$root.$state.includes('user')}"><a ui-sref="user">欢迎，{{$root.sessionData.user.username}}</a></li>
+						<li ng-click="signout()"><a href="">登出</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container" ui-view></div>
+	</body>
+</html>
