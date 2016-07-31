@@ -31,12 +31,7 @@ class User
 		$sqlUser->execute();
 
 		if( ($response = $sqlUser->fetch(PDO::FETCH_ASSOC)) ==false )
-			{
-					echo $response['password'];
-					var_dump($response);
-					return -1;
-			}
-		
+			return -1;	
 		if($response['password']==sha1($username.$password))
 			return $response['uid'];
 		else 

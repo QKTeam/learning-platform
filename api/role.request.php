@@ -5,7 +5,7 @@
 	
 	if($action[1]=='list')
 	{
-		$response=Role::list();
+		$response=Role::list(getRequest('ownerId'),getRequest('name'));
 		if($response==false)
 		{
 			handle(ERROR_SYSTEM.'00');
@@ -15,6 +15,7 @@
 			handle('0000'.json_encode($response));
 		}
 	}
+
 
 	if($action[1]=='renew')
 	{

@@ -35,12 +35,24 @@ if($action[1]=='show')
 	}
 	else 
 		handle(ERROR_PERMISSION.'04');
-
+}
+if($action[1]=='list')
+{
+	$response=Course::list(getRequest('ownerId'),getRequest('name'));
+	if($response==false)
+	{
+		handle(ERROR_SYSTEM.'04');
+	}
+	else 
+	{
+		handle('0000'.json_encode($response));
+	}
 }
 
-if(!checkAuthority())
-	handle(ERROR_PERMISSION.'01');
 
+/*if(!checkAuthority())
+	handle(ERROR_PERMISSION.'01');
+*/
 
 if ($action[1]=='new') 
 {
@@ -54,6 +66,31 @@ if ($action[1]=='new')
 	{
 		handle(ERROR_SYSTEM.'04');
 	}
-
 }
+
+if($action[1]=='renew')
+{
+	$response=Course::modify(getRequest('cid'),getRequest('name'),getRequest('content'),getRequest('visibility'));
+	if($response==false)
+	{
+		handle(ERROR_SYSTEM.'04');
+	}
+	else 
+	{
+		handle('0000');
+	}
+}
+if($action[1]=='delete')
+{
+	$response=Course::delete(getRequest('cid'));
+	if($response==false)
+	{
+		handle(ERROR_SYSTEM.'04');
+	}
+	else 
+	{
+		handle('0000');
+	}
+}
+
 ?>
