@@ -9,6 +9,7 @@ app.controller('signin', ['$scope', '$rootScope', '$http', '$state', function($s
 		// console.log(user);
 		$http.post('/api/user/signin', user).success(function (response) {
 			if(response['code'] === '0000') {
+				$rootScope.$broadcast('sessionData:willRefresh');
 				$state.go('index');
 			}
 			else {
