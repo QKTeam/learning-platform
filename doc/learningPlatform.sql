@@ -18,7 +18,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`user` (
 	PRIMARY KEY (`uid`),
 	UNIQUE INDEX `uid_UNIQUE` (`uid` ASC)
 )ENGINE = InnoDB;
-INSERT INTO `learningPlatform`.`user` VALUES (1, 'admin', sha1(concat('admin', md5('admin'))), 'admin@admin.com', 0, '0', 1);
+INSERT INTO `learningPlatform`.`user` VALUES (1, 'admin', sha1(concat('admin', md5('admin'))), 'admin@admin.com','11111111111', 0, '0', 1);
 
 -- -----------------------------------------------------
 -- Table `learningPlatform`.`role` 用户角色
