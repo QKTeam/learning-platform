@@ -2,10 +2,11 @@
 
 require_once('user.class.php');
 require_once('site.class.php');
+
 if($action[1]=='signup')
 {
 	$currentuser=new User;
-	$currentuser->init(getRequest('username'),sha1(getRequest('username').md5(getRequest('password'))),getRequest('email'),getRequest('phone'),getRequest('gender'),getRequest('studentId'),getRequest('roleId'));
+	$currentuser->init(getRequest('username'),sha1(getRequest('username').getRequest('password')),getRequest('email'),getRequest('phone'),getRequest('gender'),getRequest('studentId'),4);
 	$response=$currentuser->create();
 	if($response > 0)
 		handle('0000{"uid":'.$response.'}');
@@ -15,11 +16,12 @@ if($action[1]=='signup')
 		handle(ERROR_INPUT.'02username used');
 }
 
+
 if($action[1]=='signin')
 {
 	$currentuser=new User;
 	$currentuser->username=getRequest('username');
-	$currentuser->password=md5(getRequest('password'));
+	$currentuser->password=getRequest('password');
 	$response=$currentuser->login();
 	if($response==-1)
 	{
@@ -38,31 +40,29 @@ if($action[1]=='signin')
 }
 if($action[1]=='list')
 {
-	$uid=getRequest('uid');
-		
-		$nowUser=User::show(Site::getSessionUid());
-		$nowRoleId=$nowUser[0]['roleId'];
-		$response=User::list(getRequest('username'),getRequest('studentId'),getRequest('roleId'));
+	$nowUser=User::show(Site::getSessionUid());
+	$nowRoleId=$nowUser[0]['roleId'];
+	$response=User::list(getRequest('username'),getRequest('studentId'),getRequest('roleId'));
 
-		if($nowRoleId==1||$nowRoleId==2)
-		{
-			if($response==false)
-				handle('0000');
-			else 
-				handle('0000'.json_encode($response));
-		}
+	if($nowRoleId==1||$nowRoleId==2)
+	{
+		if($response==false)
+			handle('0000');
 		else 
-		{
-			if($response==false)
-				handle('0000');
-			
-			foreach ($response as &$i) {
-				unset($i['password']);
-				unset($i['phone']);
-				unset($i['studentId']);
-			}
 			handle('0000'.json_encode($response));
+	}
+	else 
+	{
+		if($response==false)
+			handle('0000');
+		
+		foreach ($response as &$i) {
+			unset($i['password']);
+			unset($i['phone']);
+			unset($i['studentId']);
 		}
+		handle('0000'.json_encode($response));
+	}
 }
 
 if(!checkAuthority())
