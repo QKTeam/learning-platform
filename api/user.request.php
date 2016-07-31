@@ -42,19 +42,18 @@ if($action[1]=='list')
 {
 	$nowUser=User::show(Site::getSessionUid());
 	$nowRoleId=$nowUser[0]['roleId'];
+
 	$response=User::list(getRequest('username'),getRequest('studentId'),getRequest('roleId'));
 
 	if($nowRoleId==1||$nowRoleId==2)
 	{
-		if($response==false)
-			handle('0000');
-		else 
-			handle('0000'.json_encode($response));
+		
+		handle('0000'.json_encode($response));
 	}
 	else 
 	{
-		if($response==false)
-			handle('0000');
+		//if($response==false)
+		//	handle('0000');
 		
 		foreach ($response as &$i) {
 			unset($i['password']);
