@@ -3,4 +3,4 @@
 $conn_hostname = "localhost";
 $conn_database = "learningPlatform";
 $conn_username = "root";
-$conn_password = "root";
+$conn_password = "bj123456";
