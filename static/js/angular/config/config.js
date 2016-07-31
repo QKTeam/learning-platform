@@ -5,10 +5,7 @@ app.config(['$urlRouterProvider', '$locationProvider', '$stateProvider', functio
 	state('index', {
 		url: '/',
 		templateUrl: '/template/index.html',
-		controller: 'index',
-		onEnter: ['$rootScope', function ($rootScope) {
-			$rootScope.$broadcast('userData:willRefresh');
-		}]
+		controller: 'index'
 	}).
 	state('course', {
 		url: '/course',

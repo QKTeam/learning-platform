@@ -2,7 +2,7 @@
 <html ng-app="learningPlatform">
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>{{$root.globalData.siteName}}</title>
 		<base href="/">
 		<link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 		<script src="//cdn.bootcss.com/angular.js/1.5.5/angular.min.js"></script>
@@ -18,13 +18,13 @@
 		<link href="static/css/main.css" rel="stylesheet">
 	</head>
 	<body>
-		<nav class="navbar navbar-default navbar-static-top">
+		<nav class="navbar navbar-default navbar-static-top" ng-controller="nav">
 			<div class="container">
 				<div class="navbar-header navbar-left">
-					<a class="navbar-brand" ui-sref="index">Study Platform</a>
+					<a class="navbar-brand" ui-sref="index">{{$root.globalData.siteName}}</a>
 					<ul class="nav navbar-nav">
 						<li ng-class="{'active':$root.$state.includes('course')}"><a ui-sref="course.search({ownerId:0})">课程列表</a></li>
-						<form class="navbar-form navbar-left" onsubmit="return false;" ng-controller="nav">
+						<form class="navbar-form navbar-left" onsubmit="return false;">
 							<div class="form-group">
 								<select class="form-control" ng-options="teacher.uid as teacher.username for teacher in teachers" ng-model="searchKey.ownerId"></select>
 								<input type="text" class="form-control" placeholder="搜索课程名字" ng-model="searchKey.name">
@@ -33,10 +33,16 @@
 						</form>
 					</ul>
 				</div>
-				<div class="navbar-header navbar-right">
+				<div class="navbar-header navbar-right" ng-if="!$root.sessionData.signin">
 					<ul class="nav navbar-nav">
 						<li ng-class="{'active':$root.$state.includes('signin')}"><a ui-sref="signin">登录</a></li>
 						<li ng-class="{'active':$root.$state.includes('signup')}"><a ui-sref="signup">注册</a></li>
+					</ul>
+				</div>
+				<div class="navbar-header navbar-right" ng-if="$root.sessionData.signin">
+					<ul class="nav navbar-nav">
+						<li ng-class="{'active':$root.$state.includes('user')}"><a ui-sref="user">欢迎，{{$root.sessionData.user.username}}</a></li>
+						<li ng-click="signout()"><a href="">登出</a></li>
 					</ul>
 				</div>
 			</div>

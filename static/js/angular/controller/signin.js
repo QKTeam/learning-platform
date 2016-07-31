@@ -3,7 +3,7 @@ app.controller('signin', ['$scope', '$rootScope', '$http', '$state', function($s
 		username: '',
 		password: ''
 	};
-	$scope.login = function() {
+	$scope.signin = function() {
 		var user = angular.copy($scope.user);
 		user.password = md5(user.password);
 		$http.post('/api/user/signin', user).success(function (response) {

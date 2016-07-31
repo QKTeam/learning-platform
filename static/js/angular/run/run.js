@@ -1,33 +1,44 @@
 app.run(['$rootScope', '$http', '$timeout', '$state', function($rootScope, $http, $timeout, $state) {
 	$rootScope.$state = $state;
 
-	var fetchUserData = function () {
-		$http.get('/api/user/data').success(function(response) {
-			if(response['code'] === '0000') {
-				$rootScope.user = response['response'];
+	var fetchGlobalData = function () {
+		$http.get('/api/site/globalData').success(function (response) {
+			$rootScope.globalData = response.response;
+		});
+	}
+	$timeout(fetchGlobalData, 0);
+
+	var fetchSessionData = function () {
+		$http.get('/api/site/sessionData').success(function(response) {
+			// console.log(response);
+			if(response.code === '0000') {
+				$rootScope.sessionData = response.response;
 			}
-			$rootScope.$broadcast('userData:didRefresh');
-			if($rootScope.user.signin) $rootScope.$broadcast('user:didSignIn');
-		}).error(function () {
-			alert('Network Error!');
+			$rootScope.$broadcast('sessionData:didRefresh');
+			if($rootScope.sessionData.signin) $rootScope.$broadcast('user:didSignIn');
 		});
 	};
-	$rootScope.$on('refreshUserData', function () {
-		$timeout(fetchUserData, 0);
+	$rootScope.$on('sessionData:willRefresh', function () {
+		$timeout(fetchSessionData, 0);
 	});
+	$timeout(fetchSessionData, 0);
 
-	$rootScope.teachers = [
-		{uid: 0, username: '所有老师'},
-		{uid: 1, username: 'AA'},
-		{uid: 2, username: 'BB'},
-		{uid: 3, username: 'CC'},
-	];
+	// $rootScope.teachers = [];
 	var fetchTeachersList = function () {
+		$http.get('/api/user/list', {roleId: 2}).success(function (response) {
+			console.log(response);
+			$rootScope.teachers = response.response;
+			$rootScope.teachers.splice(0, 0, {uid: 0, username: '所有老师'});
+		});
 	}
 	$timeout(fetchTeachersList, 0);
 
 	$rootScope.users = [];
 	var fetchUsersList = function () {
+		$http.get('/api/user/list').success(function (response) {
+			console.log(response);
+			$rootScope.users = response.response;
+		});
 	}
 	$timeout(fetchUsersList, 0);
 
