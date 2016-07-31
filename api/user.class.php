@@ -98,11 +98,8 @@ class User
 		$sqlUser->bindValue(':studentId','%'.urlencode($studentId).'%',PDO::PARAM_STR);
 		$sqlUser->bindValue(':roleId','%'.urlencode($roleId).'%',PDO::PARAM_STR);
 		$sqlUser->execute();
+		$response=$sqlUser->fetchall(PDO::FETCH_ASSOC);
 		
-		if( ($response=$sqlUser->fetchall(PDO::FETCH_ASSOC)) == false )
-		{
-			return false;
-		}
 		return $response;
 	}
 
