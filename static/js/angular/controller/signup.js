@@ -5,7 +5,7 @@ app.controller('signup', ['$scope', '$rootScope', '$http', '$state', function($s
 		email: '',
 		phone: '',
 		gender: '0',
-		studentID: ''
+		studentId: ''
 	};
 	$scope.errorMsg = '';
 	$scope.signin = function() {

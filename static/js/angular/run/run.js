@@ -25,8 +25,8 @@ app.run(['$rootScope', '$http', '$timeout', '$state', function($rootScope, $http
 
 	// $rootScope.teachers = [];
 	var fetchTeachersList = function () {
-		$http.get('/api/user/list', {roleId: 2}).success(function (response) {
-			console.log(response);
+		$http.post('/api/user/list', {roleId: 2}).success(function (response) {
+			// console.log(response);
 			$rootScope.teachers = response.response;
 			$rootScope.teachers.splice(0, 0, {uid: 0, username: '所有老师'});
 		});
@@ -35,8 +35,8 @@ app.run(['$rootScope', '$http', '$timeout', '$state', function($rootScope, $http
 
 	$rootScope.users = [];
 	var fetchUsersList = function () {
-		$http.get('/api/user/list').success(function (response) {
-			console.log(response);
+		$http.post('/api/user/list').success(function (response) {
+			// console.log(response);
 			$rootScope.users = response.response;
 		});
 	}
