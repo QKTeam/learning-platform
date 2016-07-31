@@ -12,8 +12,10 @@
 		<script src="//cdn.bootcss.com/angular-ui-bootstrap/1.3.2/ui-bootstrap.min.js"></script>
 		<script src="//cdn.bootcss.com/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.min.js"></script>
 		<script src="//cdn.bootcss.com/blueimp-md5/2.3.0/js/md5.js"></script>
-		<script src="static/main.js"></script>
-		<link href="static/main.css" rel="stylesheet">
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+		<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script src="static/js/main.js.php"></script>
+		<link href="static/css/main.css" rel="stylesheet">
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-static-top">
@@ -33,8 +35,8 @@
 				</div>
 				<div class="navbar-header navbar-right">
 					<ul class="nav navbar-nav">
-						<li ng-class="{'active':$root.$state.current.name==='signin'}"><a ui-sref="signin">登录</a></li>
-						<li ng-class="{'active':$root.$state.current.name==='signup'}"><a ui-sref="signup">注册</a></li>
+						<li ng-class="{'active':$root.$state.includes('signin')}"><a ui-sref="signin">登录</a></li>
+						<li ng-class="{'active':$root.$state.includes('signup')}"><a ui-sref="signup">注册</a></li>
 					</ul>
 				</div>
 			</div>
