@@ -5,7 +5,7 @@ require_once('site.class.php');
 if($action[1]=='signup')
 {
 	$currentuser=new User;
-	$currentuser->init(getRequest('username'),sha1(getRequest('username').getRequest('password')),getRequest('email'),getRequest('phone'),getRequest('gender'),getRequest('studentId'),getRequest('roleId'));
+	$currentuser->init(getRequest('username'),sha1(getRequest('username').md5(getRequest('password'))),getRequest('email'),getRequest('phone'),getRequest('gender'),getRequest('studentId'),getRequest('roleId'));
 	$response=$currentuser->create();
 	if($response > 0)
 		handle('0000{"uid":'.$response.'}');
@@ -19,7 +19,7 @@ if($action[1]=='signin')
 {
 	$currentuser=new User;
 	$currentuser->username=getRequest('username');
-	$currentuser->password=getRequest('password');
+	$currentuser->password=md5(getRequest('password'));
 	$response=$currentuser->login();
 	if($response==-1)
 	{

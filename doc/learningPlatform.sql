@@ -18,6 +18,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`user` (
 	PRIMARY KEY (`uid`),
 	UNIQUE INDEX `uid_UNIQUE` (`uid` ASC)
 )ENGINE = InnoDB;
+
 INSERT INTO `learningPlatform`.`user` VALUES (1, 'admin', sha1(concat('admin', md5('admin'))), 'admin@admin.com', '12345678901', 0, '0', 1);
 
 -- -----------------------------------------------------
