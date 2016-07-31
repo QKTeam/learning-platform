@@ -6,6 +6,7 @@ app.controller('signin', ['$scope', '$rootScope', '$http', '$state', function($s
 	$scope.signin = function() {
 		var user = angular.copy($scope.user);
 		user.password = md5(user.password);
+		// console.log(user);
 		$http.post('/api/user/signin', user).success(function (response) {
 			if(response['code'] === '0000') {
 				$state.go('index');
