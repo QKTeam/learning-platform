@@ -31,12 +31,7 @@ class User
 		$sqlUser->execute();
 
 		if( ($response = $sqlUser->fetch(PDO::FETCH_ASSOC)) ==false )
-			{
-					echo $response['password'];
-					var_dump($response);
-					return -1;
-			}
-		
+			return -1;	
 		if($response['password']==sha1($username.$password))
 			return $response['uid'];
 		else 
@@ -50,7 +45,6 @@ class User
 		$sqlUser=$pdo->prepare('SELECT `password` FROM `user` WHERE `username` = :username;');
 		$sqlUser->bindValue(':username',urlencode($username),PDO::PARAM_STR);
 		$sqlUser->execute();
-		echo $sqlUser->rowCount();
 		if($sqlUser->rowCount()!=0)
 			return -1;
 		$sqlUser=$pdo->prepare('INSERT INTO `user` 
@@ -99,7 +93,6 @@ class User
 	public function list($username,$studentId,$roleId)
 	{
 		global $pdo;
-	
 		$sqlUser=$pdo->prepare('SELECT * FROM `user` WHERE `username` like :username AND `studentId` LIKE :studentId AND `roleId` LIKE :roleId;');
 		$sqlUser->bindValue(':username','%'.urlencode($username).'%',PDO::PARAM_STR);
 		$sqlUser->bindValue(':studentId','%'.urlencode($studentId).'%',PDO::PARAM_STR);
@@ -111,7 +104,8 @@ class User
 			return false;
 		}
 		return $response;
-	}	
+	}
+
 
 	public function delete()
 	{
