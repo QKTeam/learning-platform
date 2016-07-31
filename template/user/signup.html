@@ -1,1 +1,55 @@
-sign up page
+<h2 align="center">注册新用户</h2><hr>
+<form class="form-horizontal" onsubmit="return false;">
+	<div class="form-group">
+		<label for="inputUsername" class="col-sm-3 control-label">用户名</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" id="inputUsername" placeholder="Username" ng-model="user.username">
+		</div>
+		<p class="col-sm-3 form-control-static">请填写真实姓名，注册后不可更改</p>
+	</div>
+	<div class="form-group">
+		<label for="inputPassword" class="col-sm-3 control-label">密码</label>
+		<div class="col-sm-6">
+			<input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="user.password">
+		</div>
+		<p class="col-sm-3 form-control-static"></p>
+	</div>
+	<div class="form-group">
+		<label for="inputEmail" class="col-sm-3 control-label">联系邮箱</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" id="inputEmail" placeholder="Email" ng-model="user.email">
+		</div>
+		<p class="col-sm-3 form-control-static"></p>
+	</div>
+	<div class="form-group">
+		<label for="inputPhone" class="col-sm-3 control-label">联系电话</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" id="inputPhone" placeholder="Phone" ng-model="user.phone">
+		</div>
+		<p class="col-sm-3 form-control-static"></p>
+	</div>
+	<div class="form-group">
+		<label for="inputGender" class="col-sm-3 control-label">性别</label>
+		<div class="col-sm-6">
+			<select class="form-control" id="inputGender" ng-model="user.gender">
+				<option value="0">男</option>
+				<option value="1">女</option>
+			</select>
+		</div>
+		<p class="col-sm-3 form-control-static">注册后不可更改</p>
+	</div>
+	<div class="form-group">
+		<label for="inputStudentID" class="col-sm-3 control-label">学工号</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" id="inputStudentID" placeholder="StudentID" ng-model="user.studentID">
+		</div>
+		<p class="col-sm-3 form-control-static">注册后不可更改</p>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-6 col-sm-offset-3">
+		<button type="submit" class="btn btn-primary" ng-click="signin()">注 册</button>
+		</div>
+	</div>
+	<p align="center"><a ui-sref="signin">已有帐号？点此登录</a></p>
+	<p class="text-danger">{{errorMsg}}</p>
+</form>
