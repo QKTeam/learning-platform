@@ -99,7 +99,6 @@ class User
 		$sqlUser->bindValue(':roleId','%'.urlencode($roleId).'%',PDO::PARAM_STR);
 		$sqlUser->execute();
 		$response=$sqlUser->fetchall(PDO::FETCH_ASSOC);
-		
 		return $response;
 	}
 
