@@ -94,10 +94,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 				$sqlPoint->bindValue(':name','%'.urlencode($name).'%',PDO::PARAM_STR);
 				$sqlPoint->execute();
 				$response=$sqlPoint->fetchall(PDO::FETCH_ASSOC);
-				if($response==false)
-					return false;
-				else
-					return $response;
+				return $response;
 			}
 			else if($nowRoleId==2)
 			{
@@ -118,10 +115,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 
 				$response=array_merge($response1,$response2);
 
-				if($response=="")
-					return false;
-				else
-					return $response;
+				return $response;
 			}
 			else 
 			{
@@ -129,10 +123,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 				$sqlPoint->bindValue(':name','%'.urlencode($name).'%',PDO::PARAM_STR);
 				$sqlPoint->execute();
 				$response=$sqlPoint->fetchall(PDO::FETCH_ASSOC);
-				if($response==false)
-					return false;
-				else
-					return $response;	
+				return $response;	
 			}
 		}
 	}
@@ -162,8 +153,8 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 
 		if($nowRoleId==1)
 		{
-			$sqlPoint=$pdo->prepare('UPDATE `point` SET `importance`=:importance, `name` = :name , `content` = :content,`courseId`=:courseId,`order`=:order, `visibility` = :visibility WHERE `pid` = :pid ;');
-
+			$sqlPoint=$pdo->prepare('UPDATE `point` SET `updateTime`=:updateTime,`importance`=:importance, `name` = :name , `content` = :content,`courseId`=:courseId,`order`=:order, `visibility` = :visibility WHERE `pid` = :pid ;');
+			$sqlPoint->bindValue(':updateTime',(int)time(),PDO::PARAM_INT);
 			$sqlPoint->bindValue(':importance',(int)$importance,PDO::PARAM_INT);
 			$sqlPoint->bindValue(':name',urlencode($name),PDO::PARAM_STR);
 			$sqlPoint->bindValue(':content',urlencode($content),PDO::PARAM_STR);

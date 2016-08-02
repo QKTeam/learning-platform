@@ -45,14 +45,9 @@ if($action[1]=='show')
 if($action[1]=='list')
 {
 	$response=Point::list(getRequest('ownerId'),getRequest('name'));
-	if($response==false)
-	{
-		handle(ERROR_SYSTEM.'04');
-	}
-	else 
-	{
-		handle('0000'.json_encode($response));
-	}
+	
+	handle('0000'.json_encode($response));
+	
 }
 
 
