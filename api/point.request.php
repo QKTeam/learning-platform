@@ -1,18 +1,22 @@
 <?php
 require_once('user.class.php');
 require_once('site.class.php');
+require_once('point.class.php');
 require_once('course.class.php');
 
 if($action[1]=='show')
 {
 	$nowUser=User::show(Site::getSessionUid());
 	$nowRoleId=$nowUser[0]['roleId'];
-	$cid=getRequest('cid');
-	$response=Course::show($cid);
-	if($nowRoleId==1||($nowRoleId==2 && $response['ownerId']==$nowUser))
+	$pid=getRequest('pid');
+	$response=Point::show($pid);
+
+	if($nowRoleId==1||($nowRoleId==2 && Course::findOwner($pid)==$nowUser))
 		$flag=1;
 	else 
 		$flag=0;
+
+
 	if($flag==1||$response['visibility']==true)
 	{
 		if($response==false)
@@ -25,6 +29,7 @@ if($action[1]=='show')
 				$response['visibility']=true;
 			else 
 				$response['visibility']=false;
+			
 			$response['cid']=(int)$response['cid'];
 			$response['ownerId']=(int)$response['ownerId'];
 			$response['createTime']=(int)$response['createTime'];
@@ -36,17 +41,13 @@ if($action[1]=='show')
 	else 
 		handle(ERROR_PERMISSION.'04');
 }
+
 if($action[1]=='list')
 {
-	$response=Course::list(getRequest('ownerId'),getRequest('name'));
-	if($response==false)
-	{
-		handle(ERROR_SYSTEM.'04');
-	}
-	else 
-	{
-		handle('0000'.json_encode($response));
-	}
+	$response=Point::list(getRequest('ownerId'),getRequest('name'));
+	
+	handle('0000'.json_encode($response));
+	
 }
 
 
@@ -55,14 +56,14 @@ if(!checkAuthority())
 $nowUser=User::show(Site::getSessionUid());
 $nowRoleId=$nowUser[0]['roleId'];
 
+
 if ($action[1]=='new') 
 {
 	if($nowRoleId>2)
 		handle(ERROR_PERMISSION.'01');
 
-	$newCourse=new Course;
-	$newCourse->ownerId=Site::getSessionUid();
-	if( ($response=$newCourse->create(getRequest('name'),getRequest('content'))) !=0)
+	$newPoint=new Point;
+	if( ($response=$newPoint->create(getRequest('importance'),getRequest('name'),getRequest('content'),getRequest('courseId'))) !=0)
 	{
 		handle('0000{"cid":'.$response.'}');
 	}
@@ -74,9 +75,12 @@ if ($action[1]=='new')
 
 if($action[1]=='renew')
 {
+
 	if($nowRoleId>2)
 		handle(ERROR_PERMISSION.'01');
-	$response=Course::modify(getRequest('cid'),getRequest('name'),getRequest('content'),getRequest('visibility'));
+
+	$response=Point::modify(getRequest('pid'),getRequest('importance'),getRequest('name'),getRequest('content'),getRequest('courseId'),getRequest('order'),getRequest('visibility'));
+
 	if($response==false)
 	{
 		handle(ERROR_SYSTEM.'04');
@@ -85,12 +89,14 @@ if($action[1]=='renew')
 	{
 		handle('0000');
 	}
+
 }
 if($action[1]=='delete')
 {
 	if($nowRoleId>2)
 		handle(ERROR_PERMISSION.'01');
-	$response=Course::delete(getRequest('cid'));
+
+	$response=Point::delete(getRequest('pid'));
 	if($response==false)
 	{
 		handle(ERROR_SYSTEM.'04');
@@ -100,6 +106,5 @@ if($action[1]=='delete')
 		handle('0000');
 	}
 }
-handle(ERROR_INPUT.'04');
 
 ?>
