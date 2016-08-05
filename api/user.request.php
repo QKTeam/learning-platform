@@ -22,6 +22,7 @@ if($action[1]=='signin')
 	$currentuser=new User;
 	$currentuser->username=getRequest('username');
 	$currentuser->password=getRequest('password');
+	
 	$response=$currentuser->login();
 	if($response==-1)
 	{
