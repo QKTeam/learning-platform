@@ -14,18 +14,6 @@ class Discuss
 	private $content;
 	private $courseId;
 	private $fatherId;
-/*
-`did` INT NOT NULL AUTO_INCREMENT,
-	`userId` INT NOT NULL, -- 创建用户id
-	`createTime` INT NOT NULL, -- 创建时间，秒级
-	`updateTime` INT NOT NULL, -- 修改时间，秒级
-	`title` VARCHAR(50) NOT NULL, -- 讨论标题
-	`content` TEXT NOT NULL, -- 讨论内容
-	`courseId` INT NOT NULL, -- discuss的课程id
-	`fatherId` INT NOT NULL, -- 回复discuss的id，默认0表示新开
-	PRIMARY KEY (`did`),
-
-*/
 	
 	public function create($title,$content,$courseId,$fatherId)
 	{
@@ -92,6 +80,9 @@ class Discuss
 			$nowRoleId=$nowUser[0]['roleId'];
 			$nowId=$nowUser[0]['uid'];
 		}
+		else 
+			return false;
+
 		if($nowRoleId==1)
 		{
 			$sqlDiscuss=$pdo->prepare('UPDATE `discuss` SET `updateTime`=:updateTime, `title` = :title , `content` = :content WHERE `did` = :did ;');
@@ -126,8 +117,6 @@ class Discuss
 			$nowUser=User::show(Site::getSessionUid());
 			$nowRoleId=$nowUser[0]['roleId'];
 			$nowId=$nowUser[0]['uid'];
-			if($nowRoleId==2&&($nowUser!=Course::findOwner($pid)))
-				return false;
 		}
 		else 
 			return false;
@@ -135,12 +124,32 @@ class Discuss
 
 		if($nowRoleId==1)
 		{
-			$sqlDiscuss=$pdo->prepare('UPDATE `discuss` SET `visibility` = -1 WHERE `pid` = :pid ; ');
+			$sqlDiscuss=$pdo->prepare('UPDATE FROM `discuss` WHERE `pid` = :pid ; ');
 			$sqlDiscuss->bindValue(':pid',(int)($pid),PDO::PARAM_INT);
 			$response=$sqlDiscuss->execute();
 		}
 		else
-			$response=false;
+		{
+			$flag=0;			
+			$sqlDiscuss=$pdo->prepare('SELECT * FROM `discuss` WHERE `did`=:did;');
+			$sqlDiscuss->bindValue(':did',(int)($did),PDO::PARAM_INT);
+			$sqlDiscuss->execute();
+			$response=$sqlDiscuss->fetch(PDO::FETCH_ASSOC);
+			if ($response['userid']==$nowId) 
+				$flag=1;
+			
+			if(Course::findOwner($response['courseId'])==$nowid)
+				$flag=1;
+
+			if($flag==1)
+			{
+				$sqlDiscuss=$pdo->prepare('UPDATE FROM `discuss` WHERE `pid` = :pid ; ');
+				$sqlDiscuss->bindValue(':pid',(int)($pid),PDO::PARAM_INT);
+				$response=$sqlDiscuss->execute();	
+			}
+			else 
+				return false;
+		}
 
 		if($response==false)
 			return false;
@@ -148,6 +157,18 @@ class Discuss
 			return true;
 	}
 }
+/*
+`did` INT NOT NULL AUTO_INCREMENT,
+	`userId` INT NOT NULL, -- 创建用户id
+	`createTime` INT NOT NULL, -- 创建时间，秒级
+	`updateTime` INT NOT NULL, -- 修改时间，秒级
+	`title` VARCHAR(50) NOT NULL, -- 讨论标题
+	`content` TEXT NOT NULL, -- 讨论内容
+	`courseId` INT NOT NULL, -- discuss的课程id
+	`fatherId` INT NOT NULL, -- 回复discuss的id，默认0表示新开
+	PRIMARY KEY (`did`),
+
+*/
 
 
 ?>

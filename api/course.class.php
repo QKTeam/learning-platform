@@ -25,8 +25,7 @@ class Course
 		$sqlCourse->bindValue(':name',urlencode($name),PDO::PARAM_STR);
 		$sqlCourse->bindValue(':content',urlencode($content),PDO::PARAM_STR);
 		$response=$sqlCourse->execute();
-		echo (int)$pdo->lastInsertId();
-
+		
 		try
 		{
 			return (int)$pdo->lastInsertId();

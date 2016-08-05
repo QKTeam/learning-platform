@@ -164,6 +164,20 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 			$sqlPoint->bindValue(':pid',(int)($pid),PDO::PARAM_INT);
 			$response=$sqlPoint->execute();
 		}
+		{
+
+			$sqlPoint=$pdo->prepare('UPDATE `point` SET `updateTime`=:updateTime,`importance`=:importance, `name` = :name , `content` = :content,`courseId`=:courseId,`order`=:order, `visibility` = :visibility WHERE `pid` = :pid AND `ownerId` = :nowId;');
+			$sqlPoint->bindValue(':updateTime',(int)time(),PDO::PARAM_INT);
+			$sqlPoint->bindValue(':importance',(int)$importance,PDO::PARAM_INT);
+			$sqlPoint->bindValue(':name',urlencode($name),PDO::PARAM_STR);
+			$sqlPoint->bindValue(':content',urlencode($content),PDO::PARAM_STR);
+			$sqlPoint->bindValue(':courseId',(int)$courseId,PDO::PARAM_INT);
+			$sqlPoint->bindValue(':order',(int)$order,PDO::PARAM_INT);
+			$sqlPoint->bindValue(':visibility',(int)($visibility),PDO::PARAM_INT);
+			$sqlPoint->bindValue(':pid',(int)($pid),PDO::PARAM_INT);
+			$sqlCourse->bindValue(':nowId',(int)($nowId),PDO::PARAM_INT);
+			$response=$sqlPoint->execute();
+		}
 		else
 			$response=false;
 
