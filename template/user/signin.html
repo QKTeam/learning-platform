@@ -1,7 +1,7 @@
 <h2 align="center">登录</h2><hr>
 <form onsubmit="return false;">
-	<p><input type="text" class="form-control" ng-model="user.username"></p>
-	<p><input type="password" class="form-control" ng-model="user.password"></p>
+	<p><input type="text" class="form-control" placeholder="用户名" ng-model="user.username"></p>
+	<p><input type="password" class="form-control" placeholder="密码" ng-model="user.password"></p>
 	<p><button type="submit" class="btn btn-success fullwidth" ng-click="signin()">登 录</button></p>
 	<p align="center"><a ui-sref="signup">还没有帐号？点此注册</a></p>
 </form>
