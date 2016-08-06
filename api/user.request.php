@@ -100,6 +100,7 @@ if($action[1]=='show')
 		$result['phone']=urldecode($result['phone']);
 		$result['gender']=(int)$result['gender'];
 		$result['studentId']=urldecode($result['studentId']);
+		$result['roleId']=(int)$result['roleId'];
 		$result['roleName']=Role::find($result['roleId']);
 		//var_dump($result);
 		handle('0000'.json_encode($result));
@@ -109,22 +110,27 @@ if($action[1]=='show')
 	{
 		if($nowUser==$result['uid'])
 		{
+			$result['uid']=(int)$result['uid'];
 			$result['username']=urldecode($result['username']);
 			unset($result['password']);
 			$result['email']=urldecode($result['email']);
 			$result['phone']=urldecode($result['phone']);
+			$result['gender']=(int)$result['gender'];
 			$result['studentId']=urldecode($result['studentId']);
+			$result['roleId']=(int)$result['roleId'];
 			$result['roleName']=Role::find($result['roleId']);
 			handle('0000'.json_encode($result));
 		}
 		else 
 		{
+			$result['uid']=(int)$result['uid'];
 			$result['username']=urldecode($result['username']);
 			unset($result['password']);
 			$result['email']=urldecode($result['email']);
 			unset($result['phone']);
 			unset($result['gender']);
 			unset($result['studentId']);
+			$result['roleId']=(int)$result['roleId'];
 			$result['roleName']=Role::find($result['roleId']);
 			handle('0000'.json_encode($result));	
 		}
