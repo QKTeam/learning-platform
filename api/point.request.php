@@ -29,11 +29,17 @@ if($action[1]=='show')
 				$response['visibility']=true;
 			else 
 				$response['visibility']=false;
-			
-			$response['cid']=(int)$response['cid'];
-			$response['ownerId']=(int)$response['ownerId'];
+	
+
+			$response['pid']=(int)$response['pid'];
 			$response['createTime']=(int)$response['createTime'];
 			$response['updateTime']=(int)$response['updateTime'];
+			$response['importance']=(int)$response['importance'];
+			$response['name']=urldecode($response['name']);
+			$response['content']=urldecode($response['content']);
+			$response['courseId']=(int)$response['courseId'];
+			$response['order']=(int)$response['order'];
+
 			
 			handle('0000'.json_encode($response));
 		}
@@ -45,7 +51,22 @@ if($action[1]=='show')
 if($action[1]=='list')
 {
 	$response=Point::list(getRequest('ownerId'),getRequest('name'));
-	
+	foreach ($response as &$i) 
+	{
+			$i['pid']=(int)$i['pid'];
+			$i['createTime']=(int)$i['createTime'];
+			$i['updateTime']=(int)$i['updateTime'];
+			$i['importance']=(int)$i['importance'];
+			$i['name']=urldecode($i['name']);
+			$i['content']=urldecode($i['content']);
+			$i['courseId']=(int)$i['courseId'];
+			$i['order']=(int)$i['order'];
+			if($i['visibility']==1)
+				$i['visibility']=true;
+			else 
+				$i['visibility']=false;
+	}
+
 	handle('0000'.json_encode($response));
 	
 }
@@ -106,5 +127,7 @@ if($action[1]=='delete')
 		handle('0000');
 	}
 }
+
+handle(ERROR_INPUT.'04');
 
 ?>

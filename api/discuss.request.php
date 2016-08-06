@@ -6,7 +6,6 @@ require_once('course.class.php');
 
 if($action[1]=='show')
 {
-
 	$response=Discuss::show(getRequest('did'));
 
 	if($response==false)
@@ -15,7 +14,15 @@ if($action[1]=='show')
 	}
 	else 
 	{
+
+		$response['did']=(int)$response['did'];
+		$response['userId']=(int)$response['userId'];
+		$response['createTime']=(int)$response['createTime'];
+		$response['updateTime']=(int)$response['updateTime'];
 		$response['title']=urldecode($response['title']);
+		$response['content']=urldecode($response['content']);
+		$response['courseId']=(int)$response['courseId'];
+		$response['fatherId']=(int)$response['fatherId'];
 		handle('0000'.json_encode($response));
 	}
 }
@@ -23,6 +30,16 @@ if($action[1]=='show')
 if($action[1]=='list')
 {
 	$response=Discuss::list(getRequest('courseId'));
+	foreach ($response as &$i ) {
+		$i['did']=(int)$i['did'];
+		$i['userId']=(int)$i['userId'];
+		$i['createTime']=(int)$i['createTime'];
+		$i['updateTime']=(int)$i['updateTime'];
+		$i['title']=urldecode($i['title']);
+		$i['content']=urldecode($i['content']);
+		$i['courseId']=(int)$i['courseId'];
+		$i['fatherId']=(int)$i['fatherId'];
+	}
 	handle('0000'.json_encode($response));
 }
 
@@ -73,5 +90,6 @@ if($action[1]=='delete')
 		handle('0000');
 	}
 }
+handle(ERROR_INPUT.'04');
 
 ?>

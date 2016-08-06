@@ -61,7 +61,6 @@ class Discuss
 	public function list($courseId)
 	{
 		global $pdo;
-
 		$sqlDiscuss=$pdo->prepare('SELECT * FROM `discuss` WHERE `courseId` = :courseId;');
 		$sqlDiscuss->bindValue(':courseId',(int)($courseId),PDO::PARAM_INT);
 		$sqlDiscuss->execute();
