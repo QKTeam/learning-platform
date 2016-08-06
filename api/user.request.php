@@ -2,6 +2,7 @@
 
 require_once('user.class.php');
 require_once('site.class.php');
+require_once('role.class.php');
 
 if($action[1]=='signup')
 {
@@ -53,8 +54,6 @@ if($action[1]=='list')
 	}
 	else 
 	{
-		//if($response==false)
-		//	handle('0000');
 		
 		foreach ($response as &$i) {
 			unset($i['password']);
@@ -68,6 +67,51 @@ if($action[1]=='list')
 if(!checkAuthority())
 	handle(ERROR_PERMISSION.'01');
 
+$nowUser=User::show(Site::getSessionUid());
+$nowRoleId=$nowUser[0]['roleId'];
+
+
+if($action[1]=='show')
+{
+	$response=User::show(getRequest('uid'));
+	$result=$response[0];
+	if($nowRoleId==1||$nowRoleId==2)
+	{
+		$result['username']=urldecode($result['username']);
+		unset($result['password']);
+		$result['email']=urldecode($result['email']);
+		$result['phone']=urldecode($result['phone']);
+		$result['studentId']=urldecode($result['studentId']);
+		$result['roleName']=Role::find($result['roleId']);
+		//var_dump($result);
+		handle('0000'.json_encode($result));
+
+	}
+	else 
+	{
+		if($nowUser==$result['uid'])
+		{
+			$result['username']=urldecode($result['username']);
+			unset($result['password']);
+			$result['email']=urldecode($result['email']);
+			$result['phone']=urldecode($result['phone']);
+			$result['studentId']=urldecode($result['studentId']);
+			$result['roleName']=Role::find($result['roleId']);
+			handle('0000'.json_encode($result));
+		}
+		else 
+		{
+			$result['username']=urldecode($result['username']);
+			unset($result['password']);
+			$result['email']=urldecode($result['email']);
+			unset($result['phone']);
+			unset($result['gender']);
+			unset($result['studentId']);
+			$result['roleName']=Role::find($result['roleId']);
+			handle('0000'.json_encode($result));	
+		}
+	}
+}
 if($action[1]=='signout')
 {		
 	Site::clearSession();
