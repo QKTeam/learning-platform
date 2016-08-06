@@ -93,10 +93,12 @@ if($action[1]=='show')
 	$result=$response[0];
 	if($nowRoleId==1||$nowRoleId==2)
 	{
+		$result['uid']=(int)$result['uid'];
 		$result['username']=urldecode($result['username']);
 		unset($result['password']);
 		$result['email']=urldecode($result['email']);
 		$result['phone']=urldecode($result['phone']);
+		$result['gender']=(int)$result['gender'];
 		$result['studentId']=urldecode($result['studentId']);
 		$result['roleName']=Role::find($result['roleId']);
 		//var_dump($result);
