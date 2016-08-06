@@ -49,16 +49,32 @@ if($action[1]=='list')
 
 	if($nowRoleId==1||$nowRoleId==2)
 	{
-		
+		foreach ($response as &$i) {
+			$i['uid']=(int)$i['uid'];
+			$i['username']=urldecode($i['username']);
+			unset($i['password']);
+			$i['email']=urldecode($i['email']);
+			$i['phone']=urldecode($i['phone']);
+			$i['gender']=(int)$i['gender'];
+			$i['studentId']=urldecode($i['studentId']);
+			$i['roleId']=(int)$i['roleId'];
+			$i['roleName']=Role::find($i['roleId']);	
+		}
 		handle('0000'.json_encode($response));
 	}
 	else 
 	{
 		
-		foreach ($response as &$i) {
+		foreach ($response as &$i) {		
+			$i['uid']=(int)$i['uid'];
+			$i['username']=urldecode($i['username']);
 			unset($i['password']);
+			$i['email']=urldecode($i['email']);
 			unset($i['phone']);
+			$i['gender']=(int)$i['gender'];
 			unset($i['studentId']);
+			$i['roleId']=(int)$i['roleId'];
+			$i['roleName']=Role::find($i['roleId']);
 		}
 		handle('0000'.json_encode($response));
 	}

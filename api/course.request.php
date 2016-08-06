@@ -25,11 +25,14 @@ if($action[1]=='show')
 				$response['visibility']=true;
 			else 
 				$response['visibility']=false;
+
 			$response['cid']=(int)$response['cid'];
 			$response['ownerId']=(int)$response['ownerId'];
 			$response['createTime']=(int)$response['createTime'];
 			$response['updateTime']=(int)$response['updateTime'];
-			
+      		$response['name']=urldecode($response['name']);
+      		$response['content']=urldecode($response['content']);
+      		$response['visibility']=(int)$response['visibility'];
 			handle('0000'.json_encode($response));
 		}
 	}
@@ -45,6 +48,26 @@ if($action[1]=='list')
 	}
 	else 
 	{
+
+		/*
+		    "cid": "3",
+      "ownerId": "1",
+      "createTime": "1469954109",
+      "updateTime": "1469954109",
+      "name": "first+class",
+      "content": "example",
+      "visibility": "0"
+		*/
+      foreach ($response as &$i) 
+      {
+      	$i['cid']=(int)$i['cid'];
+      	$i['ownerId']=(int)$i['ownerId'];
+      	$i['createTime']=(int)$i['createTime'];
+      	$i['updateTime']=(int)$i['updateTime'];
+      	$i['name']=urldecode($i['name']);
+      	$i['content']=urldecode($i['content']);
+      	$i['visibility']=(int)$i['visibility'];
+      }
 		handle('0000'.json_encode($response));
 	}
 }
@@ -100,6 +123,7 @@ if($action[1]=='delete')
 		handle('0000');
 	}
 }
+
 handle(ERROR_INPUT.'04');
 
 ?>

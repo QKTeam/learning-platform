@@ -164,6 +164,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 			$sqlPoint->bindValue(':pid',(int)($pid),PDO::PARAM_INT);
 			$response=$sqlPoint->execute();
 		}
+		else if ($nowRoleId==2)
 		{
 
 			$sqlPoint=$pdo->prepare('UPDATE `point` SET `updateTime`=:updateTime,`importance`=:importance, `name` = :name , `content` = :content,`courseId`=:courseId,`order`=:order, `visibility` = :visibility WHERE `pid` = :pid AND `ownerId` = :nowId;');
