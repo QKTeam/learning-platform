@@ -50,6 +50,10 @@
 		<button type="submit" class="btn btn-primary" ng-click="signin()">注 册</button>
 		</div>
 	</div>
+	<div class="form-group">
+		<div class="col-sm-6 col-sm-offset-3">
+			<p class="text-danger">{{errorMsg}}</p>
+		</div>
+	</div>
 	<p align="center"><a ui-sref="signin">已有帐号？点此登录</a></p>
-	<p class="text-danger">{{errorMsg}}</p>
 </form>

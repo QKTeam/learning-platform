@@ -41,7 +41,7 @@
 				</div>
 				<div class="navbar-header navbar-right" ng-if="$root.sessionData.signin">
 					<ul class="nav navbar-nav">
-						<li ng-class="{'active':$root.$state.includes('user')}"><a ui-sref="user">欢迎，{{$root.sessionData.user.username}}</a></li>
+						<li ng-class="{'active':$root.$state.includes('user')}"><a ui-sref="user.show({uid:$root.sessionData.user.uid})">欢迎，{{$root.sessionData.user.username}}</a></li>
 						<li ng-click="signout()"><a href="">登出</a></li>
 					</ul>
 				</div>

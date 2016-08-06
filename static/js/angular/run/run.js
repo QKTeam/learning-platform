@@ -2,14 +2,14 @@ app.run(['$rootScope', '$http', '$timeout', '$state', function($rootScope, $http
 	$rootScope.$state = $state;
 
 	var fetchGlobalData = function () {
-		$http.get('/api/site/globalData').success(function (response) {
+		$http.post('/api/site/globalData').success(function (response) {
 			$rootScope.globalData = response.response;
 		});
 	}
 	$timeout(fetchGlobalData, 0);
 
 	var fetchSessionData = function () {
-		$http.get('/api/site/sessionData').success(function(response) {
+		$http.post('/api/site/sessionData').success(function(response) {
 			// console.log(response);
 			if(response.code === '0000') {
 				$rootScope.sessionData = response.response;
@@ -23,7 +23,7 @@ app.run(['$rootScope', '$http', '$timeout', '$state', function($rootScope, $http
 	});
 	$timeout(fetchSessionData, 0);
 
-	// $rootScope.teachers = [];
+	$rootScope.teachers = [];
 	var fetchTeachersList = function () {
 		$http.post('/api/user/list', {roleId: 2}).success(function (response) {
 			// console.log(response);
@@ -41,6 +41,14 @@ app.run(['$rootScope', '$http', '$timeout', '$state', function($rootScope, $http
 		});
 	}
 	$timeout(fetchUsersList, 0);
+
+	$rootScope.roles = [];
+	var fetchRoleList = function () {
+		$http.post('/api/role/list').success(function (response) {
+			$rootScope.roles = response.response;
+		});
+	}
+	$timeout(fetchRoleList, 0);
 
 	$rootScope.getUserBasicInfoByUid = function (uid) {
 		for (var i = $rootScope.users.length - 1; i >= 0; i--) {

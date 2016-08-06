@@ -16,6 +16,15 @@ app.config(['$urlRouterProvider', '$locationProvider', '$stateProvider', functio
 		templateUrl: '/template/course/search.html',
 		controller: 'course.search'
 	}).
+	state('user', {
+		url: '/user',
+		template: '<div ui-view></div>'
+	}).
+	state('user.show', {
+		url: '/show/:uid',
+		templateUrl: '/template/user/show.html',
+		controller: 'user.show'
+	}).
 	state('signin', {
 		url: '/signin',
 		templateUrl: '/template/user/signin.html',
