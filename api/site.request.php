@@ -23,11 +23,23 @@
 					$roleName=Role::find($response[0]['roleId']);
 					if($roleName==false)
 						handle(ERROR_SYSTEM.'00');
-					handle('0000{"signin":true,"user":'.json_encode($response[0]).'}');
+					$result=$response[0];
+					$result['uid']=(int)$result['uid'];
+					$result['username']=urldecode($result['username']);
+					unset($result['password']);
+					$result['email']=urldecode($result['email']);
+					$result['phone']=urldecode($result['phone']);
+					$result['gender']=(int)($result['gender']);
+					$result['studentId']=urldecode($result['studentId']);
+					$result['roleId']=(int)$result['roleId'];
+					$result['roleName']=urldecode($roleName);
+					handle('0000{"signin":true,"user":'.json_encode($result).'}');
 				}
+
 		break;
 		default:
 			handle(ERROR_INPUT.'00');
 		break;
 	}
 ?>
+

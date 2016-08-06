@@ -70,17 +70,10 @@ class User
 	
 	public function show($id)
 	{
-		global $pdo;
-		if($id!=0)
+		global $pdo; 
 		{
-			$sqlUser=$pdo->prepare('SELECT * FROM `user` WHERE `uid`=:uid ;');
-			$sqlUser->bindValue(':uid',(int)$id,PDO::PARAM_INT);
-			$sqlUser->execute();
-		}
-		else 
-		{
-			$sqlUser=$pdo->prepare('SELECT * FROM `user`;');
-			$sqlUser->bindValue(':uid',(int)$id,PDO::PARAM_INT);
+			$sqlUser=$pdo->prepare('SELECT * FROM `user` WHERE `uid` = :id;');
+			$sqlUser->bindValue(':id',(int)$id,PDO::PARAM_INT);
 			$sqlUser->execute();	
 		}
 		if( ($response=$sqlUser->fetchall(PDO::FETCH_ASSOC)) == false )

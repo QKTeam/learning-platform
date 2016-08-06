@@ -12,6 +12,11 @@
 		}
 		else 
 		{
+			foreach($response as &$i)
+			{
+				$i['rid']=(int)$i['rid'];
+				$i['name']=urldecode($i['name']);
+			}
 			handle('0000'.json_encode($response));
 		}
 	}
@@ -44,5 +49,6 @@
 		{
 			handle(ERROR_INPUT.'03');
 		}
+	handle(ERROR_INPUT.'03');
 }
 ?>

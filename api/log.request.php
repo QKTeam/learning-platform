@@ -15,6 +15,12 @@ if($action[1]=='show')
 	}
 	else 
 	{
+		$response['lid']=(int)$response['lid'];
+		$response['createTime']=(int)$response['createTime'];
+		$response['userId']=(int)$response['userId'];
+		$response['pointId']=(int)$response['pointId'];
+		$response['courseId']=(int)$response['courseId'];
+		$response['status']=(int)$response['status'];
 		handle('0000'.json_encode($response));
 	}
 	
@@ -34,6 +40,14 @@ if($action[1]=='list')
 	}
 	else 
 	{
+		foreach ($response as &$i ) {
+			$i['lid']=(int)$i['lid'];
+			$i['createTime']=(int)$i['createTime'];
+			$i['userId']=(int)$i['userId'];
+			$i['pointId']=(int)$i['pointId'];
+			$i['courseId']=(int)$i['courseId'];
+			$i['status']=(int)$i['status'];
+		}
 		handle('0000'.json_encode($response));
 	}
 }
@@ -84,6 +98,6 @@ if($action[1]=='delete')
 		handle('0000');
 	}
 }
-handle(ERROR_INPUT.'04');
+handle(ERROR_INPUT.'05');
 
 ?>
