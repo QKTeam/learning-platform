@@ -58,7 +58,7 @@ if($action[1]=='list')
 			$i['gender']=(int)$i['gender'];
 			$i['studentId']=urldecode($i['studentId']);
 			$i['roleId']=(int)$i['roleId'];
-			$i['roleName']=Role::find($i['roleId']);	
+			$i['roleName']=urldecode(Role::find($i['roleId']));	
 		}
 		handle('0000'.json_encode($response));
 	}
@@ -74,7 +74,7 @@ if($action[1]=='list')
 			$i['gender']=(int)$i['gender'];
 			unset($i['studentId']);
 			$i['roleId']=(int)$i['roleId'];
-			$i['roleName']=Role::find($i['roleId']);
+			$i['roleName']=urldecode(Role::find($i['roleId']));
 		}
 		handle('0000'.json_encode($response));
 	}
@@ -104,7 +104,7 @@ if($action[1]=='show')
 		$result['gender']=(int)$result['gender'];
 		$result['studentId']=urldecode($result['studentId']);
 		$result['roleId']=(int)$result['roleId'];
-		$result['roleName']=Role::find($result['roleId']);
+		$result['roleName']=urldecode(Role::find($result['roleId']));
 		//var_dump($result);
 		handle('0000'.json_encode($result));
 	}
@@ -120,7 +120,7 @@ if($action[1]=='show')
 			$result['gender']=(int)$result['gender'];
 			$result['studentId']=urldecode($result['studentId']);
 			$result['roleId']=(int)$result['roleId'];
-			$result['roleName']=Role::find($result['roleId']);
+			$result['roleName']=urldecode(Role::find($result['roleId']));
 			handle('0000'.json_encode($result));
 		}
 		else 
@@ -133,7 +133,7 @@ if($action[1]=='show')
 			unset($result['gender']);
 			unset($result['studentId']);
 			$result['roleId']=(int)$result['roleId'];
-			$result['roleName']=Role::find($result['roleId']);
+			$result['roleName']=urldecode(Role::find($result['roleId']));
 			handle('0000'.json_encode($result));	
 		}
 	}
