@@ -85,6 +85,7 @@ if(!checkAuthority())
 
 $nowUser=User::show(Site::getSessionUid());
 $nowRoleId=$nowUser[0]['roleId'];
+$nowId=$nowUser[0]['uid'];
 
 
 if($action[1]=='show')
@@ -129,6 +130,14 @@ if($action[1]=='show')
 			handle('0000'.json_encode($result));	
 		}
 	}
+}
+if($action[1]=='renew')
+{
+	$response=User::modify(getRequest('uid'),getRequest('old_password'),getRequest('new_password'),getRequest('email'),getRequest('phone'),getRequest('roleId'));
+	if($response==false)
+		handle(ERROR_SYSTEM.'02');
+	else 
+		handle('0000');
 }
 if($action[1]=='signout')
 {		
