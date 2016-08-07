@@ -36,6 +36,7 @@
 				</a>
 			</div>
 			<div>
+				<span class="text-muted">@{{getUserBasicInfoByUid(discuss.userId).username}}:</span>
 				<span ng-show="discuss.fatherId!=0">回复<a href="#discuss-{{discuss.fatherId}}">#{{discuss.fatherId}}</a>：</span>
 				<span>{{discuss.title}}</span>
 			</div>

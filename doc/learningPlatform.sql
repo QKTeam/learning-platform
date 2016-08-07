@@ -8,12 +8,12 @@ USE `learningPlatform` ;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `learningPlatform`.`user` (
 	`uid` INT NOT NULL AUTO_INCREMENT,
-	`username` VARCHAR(50) NOT NULL, -- 用户名，英文开头，只包含英文和数字，长度不超过30
+	`username` TEXT NOT NULL, -- 用户名，英文开头，只包含英文和数字，长度不超过30
 	`password` VARCHAR(50) NOT NULL, -- 密码，采用sha1(用户名+md5(原密码))加密，md5由前端Angular加密传输
-	`email` VARCHAR(100) NOT NULL, -- 邮箱
-	`phone` VARCHAR(20) NOT NULL, -- 联系电话
+	`email` TEXT NOT NULL, -- 邮箱
+	`phone` TEXT NOT NULL, -- 联系电话
 	`gender` INT(1) NOT NULL, -- 性别 0（男）或1（女）
-	`studentId` VARCHAR(30) NOT NULL, -- 学号
+	`studentId` TEXT NOT NULL, -- 学号
 	`roleId` INT NOT NULL DEFAULT 4, -- 角色（对应role表中rid）
 	PRIMARY KEY (`uid`),
 	UNIQUE INDEX `uid_UNIQUE` (`uid` ASC)
@@ -43,7 +43,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`course` (
 	`ownerId` INT NOT NULL, -- 创建人uid
 	`createTime` INT NOT NULL, -- 创建时间，秒级
 	`updateTime` INT NOT NULL, -- 修改时间，秒级
-	`name` VARCHAR(50) NOT NULL, -- 课程名称
+	`name` TEXT NOT NULL, -- 课程名称
 	`content` TEXT NOT NULL, -- 课程内容
 	`visibility` INT NOT NULL DEFAULT 0, -- 可见性，0隐藏，1可见，-1删除
 	PRIMARY KEY (`cid`),
@@ -58,7 +58,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 	`createTime` INT NOT NULL, -- 创建时间，秒级
 	`updateTime` INT NOT NULL, -- 修改时间，秒级
 	`importance` INT(1) NOT NULL DEFAULT 0, -- 重要性，[0-5]表示[0-5]个感叹号
-	`name` VARCHAR(50) NOT NULL, -- 知识点名称
+	`name` TEXT NOT NULL, -- 知识点名称
 	`content` TEXT NOT NULL, -- 知识点内容
 	`courseId` INT NOT NULL, -- 属于的课程id
 	`order` INT NOT NULL DEFAULT 0, -- 排序顺序，`order`相同则按照`pid`排序
@@ -89,7 +89,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`discuss` (
 	`userId` INT NOT NULL, -- 创建用户id
 	`createTime` INT NOT NULL, -- 创建时间，秒级
 	`updateTime` INT NOT NULL, -- 修改时间，秒级
-	`title` VARCHAR(50) NOT NULL, -- 讨论标题
+	`title` TEXT NOT NULL, -- 讨论标题
 	`content` TEXT NOT NULL, -- 讨论内容
 	`courseId` INT NOT NULL, -- discuss的课程id
 	`fatherId` INT NOT NULL, -- 回复discuss的id，默认0表示新开
