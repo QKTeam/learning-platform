@@ -1,5 +1,6 @@
 <?php
 require_once('../connection/connection.php');
+require_once('site.class.php');
 class User
 {
 	public $uid;
@@ -68,6 +69,53 @@ class User
 		}
 	}
 	
+	public function modify($uid,$old_password,$new_password,$email,$phone,$roleId)
+	{
+		global $pdo;
+		if(checkAuthority())
+		{
+			$nowUser=User::show(Site::getSessionUid());
+			$nowRoleId=$nowUser[0]['roleId'];
+			$nowId=$nowUser[0]['uid'];
+		}
+		else 
+			return false;
+		$response=User::show($uid);
+		$username=$response[0]['username'];
+			
+		if($nowRoleId==1)
+		{
+			$sqlUser=$pdo->prepare('UPDATE `user` SET `password`=:password,
+													  `email`=:email,
+													  `phone`=:phone,
+													  `roleId`=:roleId
+													WHERE `uid`=:uid;');
+			$sqlUser->bindValue(':password',urlencode(sha1($username.$new_password)),PDO::PARAM_STR);
+			$sqlUser->bindValue(':email',urlencode($email),PDO::PARAM_STR);
+			$sqlUser->bindValue(':phone',urlencode($phone),PDO::PARAM_STR);
+			$sqlUser->bindValue(':roleId',(int)$roleId,PDO::PARAM_INT);
+			$sqlUser->bindValue(':uid',(int)$uid,PDO::PARAM_INT);
+			return $sqlUser->execute();
+		}
+		else 
+		{
+			if($uid!=$nowId)
+				return false;
+
+			$sqlUser=$pdo->prepare('UPDATE `user` SET `password`=:password,
+													  `email`=:email,
+													  `phone`=:phone
+													WHERE `uid`=:uid AND `password`=:old_password;');
+			$sqlUser->bindValue(':password',urlencode(sha1($username.$new_password)),PDO::PARAM_STR);
+			$sqlUser->bindValue(':email',urlencode($email),PDO::PARAM_STR);
+			$sqlUser->bindValue(':phone',urlencode($phone),PDO::PARAM_STR);
+			$sqlUser->bindValue(':old_password',urlencode(sha1($username.$old_password)),PDO::PARAM_STR);
+			$sqlUser->bindValue(':uid',(int)$uid,PDO::PARAM_INT);
+			return $sqlUser->execute();
+
+		}
+	}
+
 	public function show($id)
 	{
 		global $pdo; 
