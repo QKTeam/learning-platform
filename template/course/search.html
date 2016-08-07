@@ -1,3 +1,8 @@
-course search
-{{$state.params.ownerId}}
-{{$state.params.name}}
+<div class="pull-right" ng-show="$root.sessionData.signin && $root.sessionData.user.roleId<=2">
+	<button type="button" class="btn btn-success btn-sm" ng-click="addCourse()">添加课程</button>
+</div>
+<div>
+	<span class="text-muted">老师：</span><code>{{$state.params.ownerId==0?'所有老师':$root.getUserBasicInfoByUid($state.params.ownerId).username}}</code>
+	<span class="text-muted">课程：</span><code>{{$state.params.name===''?'所有':$state.params.name}}</code>
+</div>
+<hr>
