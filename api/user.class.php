@@ -82,7 +82,7 @@ class User
 			return false;
 		$response=User::show($uid);
 		$username=$response[0]['username'];
-			
+		$oldpassword=$response[0]['password'];
 		if($nowRoleId==1)
 		{
 			$sqlUser=$pdo->prepare('UPDATE `user` SET `password`=:password,
@@ -101,7 +101,8 @@ class User
 		{
 			if($uid!=$nowId)
 				return false;
-
+			if($oldpassword!=sha1($username.$old_password))
+				return false;
 			$sqlUser=$pdo->prepare('UPDATE `user` SET `password`=:password,
 													  `email`=:email,
 													  `phone`=:phone
