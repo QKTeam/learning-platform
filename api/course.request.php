@@ -42,7 +42,7 @@ if($action[1]=='show')
 }
 if($action[1]=='list')
 {
-	$response=Course::list(getRequest('ownerId'),getRequest('name'));
+	$response=Course::listData(getRequest('ownerId'),getRequest('name'));
 	if($response=="")
 	{
 		handle('0000');
@@ -131,5 +131,3 @@ if($action[1]=='delete')
 }
 
 handle(ERROR_INPUT.'04');
-
-?>

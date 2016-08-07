@@ -23,7 +23,7 @@ class Role
 		}
 	}
 
-	public function list()
+	public function listData()
 	{
 		global $pdo;
 		$sqlRole=$pdo->prepare('SELECT * FROM `role`;');
@@ -51,5 +51,3 @@ class Role
 		return $sqlRole->execute();
 	}
 }
-
-?>

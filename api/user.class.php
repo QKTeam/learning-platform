@@ -160,7 +160,7 @@ class User
 		return $response;
 	}
 
-	public function list($username,$studentId,$roleId)
+	public function listData($username,$studentId,$roleId)
 	{
 		global $pdo;
 		$sqlUser=$pdo->prepare('SELECT * FROM `user` WHERE `username` like :username AND `studentId` LIKE :studentId AND `roleId` LIKE :roleId;');
@@ -183,5 +183,3 @@ class User
 	}
 	
 }
-
-?>

@@ -87,7 +87,7 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 		}
 	}
 
-	public function list($courseId,$name)
+	public function listData($courseId,$name)
 	{
 		global $pdo;
 		$nowRoleId = -1;
@@ -218,8 +218,3 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`point` (
 			return true;
 	}
 }
-
-
-?>
-
-

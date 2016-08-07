@@ -58,7 +58,7 @@ class Discuss
 		}
 	}
 
-	public function list($courseId)
+	public function listData($courseId)
 	{
 		global $pdo;
 		$sqlDiscuss=$pdo->prepare('SELECT * FROM `discuss` WHERE `courseId` = :courseId;');
@@ -168,8 +168,3 @@ class Discuss
 	PRIMARY KEY (`did`),
 
 */
-
-
-?>
-
-

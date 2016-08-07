@@ -70,7 +70,7 @@ class Log
 			return $response;
 		}
 	}
-	public function list($userId,$pointId)
+	public function listData($userId,$pointId)
 	{
 		global $pdo;
 
@@ -135,7 +135,3 @@ class Log
 
 	
 }
-
-?>
-
-

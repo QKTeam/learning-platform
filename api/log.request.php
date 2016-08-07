@@ -33,7 +33,7 @@ $nowRoleId=$nowUser[0]['roleId'];
 
 if($action[1]=='list')
 {
-	$response=Log::list(getRequest('userId'),getRequest('pointId'));
+	$response=Log::listData(getRequest('userId'),getRequest('pointId'));
 	if($response==false)
 	{
 		handle(ERROR_SYSTEM.'04');
@@ -99,5 +99,3 @@ if($action[1]=='delete')
 	}
 }
 handle(ERROR_INPUT.'05');
-
-?>

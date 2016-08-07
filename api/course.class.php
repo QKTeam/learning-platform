@@ -64,7 +64,7 @@ class Course
 			return $response;
 		}
 	}
-	public function list($ownerId,$name)
+	public function listData($ownerId,$name)
 	{
 		global $pdo;
 
@@ -276,6 +276,3 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`course` (
 )ENGINE = InnoDB;
 
 */
-?>
-
-

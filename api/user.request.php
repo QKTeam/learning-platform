@@ -45,7 +45,7 @@ if($action[1]=='list')
 	$nowUser=User::show(Site::getSessionUid());
 	$nowRoleId=$nowUser[0]['roleId'];
 
-	$response=User::list(getRequest('username'),getRequest('studentId'),getRequest('roleId'));
+	$response=User::listData(getRequest('username'),getRequest('studentId'),getRequest('roleId'));
 
 	if($nowRoleId==1||$nowRoleId==2)
 	{
@@ -163,4 +163,3 @@ else
 {
 	handle(ERROR_INPUT,'02');
 }
-?>

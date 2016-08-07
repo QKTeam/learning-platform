@@ -29,7 +29,7 @@ if($action[1]=='show')
 
 if($action[1]=='list')
 {
-	$response=Discuss::list(getRequest('courseId'));
+	$response=Discuss::listData(getRequest('courseId'));
 	foreach ($response as &$i ) {
 		$i['did']=(int)$i['did'];
 		$i['userId']=(int)$i['userId'];
@@ -91,5 +91,3 @@ if($action[1]=='delete')
 	}
 }
 handle(ERROR_INPUT.'04');
-
-?>

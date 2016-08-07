@@ -49,7 +49,7 @@ if($action[1]=='show')
 
 if($action[1]=='list')
 {
-	$response=Point::list(getRequest('courseId'),getRequest('name'));
+	$response=Point::listData(getRequest('courseId'),getRequest('name'));
 	foreach ($response as &$i) 
 	{
 			$i['pid']=(int)$i['pid'];
@@ -128,5 +128,3 @@ if($action[1]=='delete')
 }
 
 handle(ERROR_INPUT.'04');
-
-?>

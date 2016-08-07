@@ -5,7 +5,7 @@
 	
 	if($action[1]=='list')
 	{
-		$response=Role::list(getRequest('ownerId'),getRequest('name'));
+		$response=Role::listData(getRequest('ownerId'),getRequest('name'));
 		if($response==false)
 		{
 			handle(ERROR_SYSTEM.'00');
@@ -51,4 +51,3 @@
 		}
 	handle(ERROR_INPUT.'03');
 }
-?>
