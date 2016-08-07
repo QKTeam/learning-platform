@@ -80,8 +80,8 @@ if($action[1]=='list')
 	}
 }
 
-if(!checkAuthority())
-	handle(ERROR_PERMISSION.'01');
+// if(!checkAuthority())
+// 	handle(ERROR_PERMISSION.'01');
 
 $nowUser=User::show(Site::getSessionUid());
 $nowRoleId=$nowUser[0]['roleId'];
@@ -91,7 +91,9 @@ if($action[1]=='show')
 {
 	$response=User::show(getRequest('uid'));
 	$result=$response[0];
-	if($nowRoleId==1||$nowRoleId==2)
+	// var_dump($nowUser);
+	// var_dump($result['uid']);
+	if($nowRoleId==1||$nowRoleId==2||$nowUser[0]['uid']==$result['uid'])
 	{
 		$result['uid']=(int)$result['uid'];
 		$result['username']=urldecode($result['username']);
@@ -104,7 +106,6 @@ if($action[1]=='show')
 		$result['roleName']=Role::find($result['roleId']);
 		//var_dump($result);
 		handle('0000'.json_encode($result));
-
 	}
 	else 
 	{

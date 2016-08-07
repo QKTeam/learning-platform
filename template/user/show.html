@@ -1,6 +1,57 @@
 <div class="pull-right">
-	<select class="form-control" ng-model="user.roleId" ng-options="role.rid as role.name for role in $root.roles"></select>
+	<select class="form-control input-sm" ng-model="user.roleId" ng-options="role.rid as role.name for role in $root.roles" ng-disabled="!$root.sessionData.signin || $root.sessionData.user.roleId>2"></select>
 </div>
+<!-- {{user}} -->
 <fieldset>
-	<legend>{{user.username}}</legend>
+	<legend>{{user.username}} <small class="text-muted">#{{user.uid}}</small></legend>
+	<form class="form-horizontal" onsubmit="return false;">
+		<div class="form-group" ng-show="$root.sessionData.signin && ($root.sessionData.user.uid==user.uid || $root.sessionData.user.roleId<=2)">
+			<label for="inputOldPassword" class="col-sm-3 control-label">原密码</label>
+			<div class="col-sm-6">
+				<input type="password" class="form-control" id="inputOldPassword" placeholder="Old Password" ng-model="user.old_password">
+			</div>
+			<p class="col-sm-3 form-control-static">若要修改任何信息，请输入原密码</p>
+		</div>
+		<div class="form-group" ng-show="$root.sessionData.signin && ($root.sessionData.user.uid==user.uid || $root.sessionData.user.roleId<=2)">
+			<label for="inputNewPassword" class="col-sm-3 control-label">新密码</label>
+			<div class="col-sm-6">
+				<input type="password" class="form-control" id="inputNewPassword" placeholder="New Password" ng-model="user.new_password">
+			</div>
+			<p class="col-sm-3 form-control-static"></p>
+		</div>
+		<div class="form-group">
+			<label for="inputEmail" class="col-sm-3 control-label">邮箱</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" id="inputEmail" placeholder="Email" ng-model="user.email" ng-disabled="!($root.sessionData.signin && ($root.sessionData.user.uid==user.uid || $root.sessionData.user.roleId<=2))">
+			</div>
+			<p class="col-sm-3 form-control-static"></p>
+		</div>
+		<div class="form-group" ng-show="$root.sessionData.signin && ($root.sessionData.user.uid==user.uid || $root.sessionData.user.roleId<=2)">
+			<label for="inputPhone" class="col-sm-3 control-label">联系电话</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" id="inputPhone" placeholder="Phone" ng-model="user.phone">
+			</div>
+			<p class="col-sm-3 form-control-static"></p>
+		</div>
+		<div class="form-group" ng-show="$root.sessionData.signin && ($root.sessionData.user.uid==user.uid || $root.sessionData.user.roleId<=2)">
+			<div class="col-sm-6 col-sm-offset-3">
+				<button type="button" class="btn btn-primary" ng-click="save()">保存</button>
+			</div>
+		</div>
+	</form>
+</fieldset>
+<fieldset ng-show="$root.sessionData.signin && ($root.sessionData.user.uid==user.uid || $root.sessionData.user.roleId<=2)">
+	<legend>个人信息</legend>
+	<form class="form-horizontal" onsubmit="return false;">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">性别</label>
+			<p class="col-sm-6 form-control-static">{{user.gender?'女':'男'}}</p>
+			<p class="col-sm-3 form-control-static"></p>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">学号</label>
+			<p class="col-sm-6 form-control-static">{{user.studentId}}</p>
+			<p class="col-sm-3 form-control-static"></p>
+		</div>
+	</form>
 </fieldset>
