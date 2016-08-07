@@ -30,10 +30,10 @@ CREATE  TABLE IF NOT EXISTS `learningPlatform`.`role` (
 	PRIMARY KEY (`rid`),
 	UNIQUE INDEX `rid_UNIQUE` (`rid` ASC)
 )ENGINE = InnoDB;
-INSERT INTO `learningPlatform`.`role` VALUES (1, '管理员');
-INSERT INTO `learningPlatform`.`role` VALUES (2, '老师');
-INSERT INTO `learningPlatform`.`role` VALUES (3, '学生');
-INSERT INTO `learningPlatform`.`role` VALUES (4, '游客');
+INSERT INTO `learningPlatform`.`role` VALUES (1, '%E7%AE%A1%E7%90%86%E5%91%98');
+INSERT INTO `learningPlatform`.`role` VALUES (2, '%E8%80%81%E5%B8%88');
+INSERT INTO `learningPlatform`.`role` VALUES (3, '%E5%AD%A6%E7%94%9F');
+INSERT INTO `learningPlatform`.`role` VALUES (4, '%E6%B8%B8%E5%AE%A2');
 
 -- -----------------------------------------------------
 -- Table `learningPlatform`.`course` 课程
