@@ -117,6 +117,34 @@ class User
 		}
 	}
 
+	public function modifyAdmin($uid,$email,$phone,$roleId)
+	{
+		global $pdo;
+		if(checkAuthority())
+		{
+			$nowUser=User::show(Site::getSessionUid());
+			$nowRoleId=$nowUser[0]['roleId'];
+			$nowId=$nowUser[0]['uid'];
+		}
+		else 
+			return false;
+		$response=User::show($uid);
+		$username=$response[0]['username'];
+		if($nowRoleId==1)
+		{
+			$sqlUser=$pdo->prepare('UPDATE `user` SET `email`=:email,
+													  `phone`=:phone,
+													  `roleId`=:roleId
+													WHERE `uid`=:uid;');
+			$sqlUser->bindValue(':email',urlencode($email),PDO::PARAM_STR);
+			$sqlUser->bindValue(':phone',urlencode($phone),PDO::PARAM_STR);
+			$sqlUser->bindValue(':roleId',(int)$roleId,PDO::PARAM_INT);
+			$sqlUser->bindValue(':uid',(int)$uid,PDO::PARAM_INT);
+			return $sqlUser->execute();
+		}
+		return false;
+	}
+
 	public function show($id)
 	{
 		global $pdo; 

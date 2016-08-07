@@ -1,0 +1,25 @@
+<div class="container-fluid">
+	<h2 align="center">添加课程</h2><hr>
+	<div class="form-group">
+		<label>课程题目</label>
+		<input class="form-control" ng-model="course.name">
+	</div>
+	<div class="form-group" ng-init="showTextarea=true">
+		<div class="pull-right">
+			<button type="button" class="btn btn-default btn-xs" ng-click="showTextarea=!showTextarea">
+				<span ng-show="showTextarea">显示预览</span>
+				<span ng-hide="showTextarea">关闭预览</span>
+			</button>
+		</div>
+		<label>课程描述 <small class="text-muted">使用Markdown和MathJax渲染</small></label>
+		<div ng-show="showTextarea">
+			<textarea class="form-control" msd-elastic rows=2 ng-model="course.content"></textarea>
+		</div>
+		<div class="container-fluid infobox" ng-hide="showTextarea">
+			<markdown content="course.content"></markdown>
+		</div>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-warning fullwidth" ng-click="add()">添加</button>
+	</div>
+</div>

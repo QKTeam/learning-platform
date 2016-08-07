@@ -1,4 +1,4 @@
-app.controller('course.add', ['$scope', '$rootScope', '$http', '$state', '$uibModal', function($scope, $rootScope, $http, $state, $uibModal){
+app.controller('course.new', ['$scope', '$rootScope', '$http', '$state', '$uibModalInstance', function($scope, $rootScope, $http, $state, $uibModalInstance){
 	$scope.course = {
 		name: '',
 		content: ''
@@ -7,6 +7,7 @@ app.controller('course.add', ['$scope', '$rootScope', '$http', '$state', '$uibMo
 		$http.post('/api/course/new', $scope.course).success(function (response) {
 			if(response.code === '0000') {
 				$state.go('course.show', response.response);
+				$uibModalInstance.dismiss();
 			}
 			else {
 				alert(response.errorMsg);

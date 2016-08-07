@@ -1,2 +1,3 @@
-app.controller('index', ['$scope', '$rootScope', '$http', '$timeout', function($scope, $rootScope, $http, $timeout){
+app.controller('index', ['$scope', '$rootScope', '$http', '$timeout', '$state', function($scope, $rootScope, $http, $timeout, $state){
+	$state.go('course.search');
 }]);

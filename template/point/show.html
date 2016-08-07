@@ -1,0 +1,14 @@
+<h2><code>{{point.importanceStr}}</code> {{point.name}} <small># {{course.name}}</small></h2>
+<div class="pull-right" ng-show="$root.sessionData.signin && ($root.sessionData.user.roleId==1 || $root.sessionData.user.uid==course.ownerId)">
+	<button type="button" class="btn btn-info btn-sm" ng-click="modifyPoint()">修改详情</button>
+</div>
+<fieldset style="margin-bottom: 30px;">
+	<legend>知识信息</legend>
+	<div class="text-muted">
+		<span>知识创建时间：{{point.createTime * 1000 | date:'yyyy-MM-dd HH:mm'}}，</span>
+		<span>最后修改时间：{{point.updateTime * 1000 | date:'yyyy-MM-dd HH:mm'}}</span>
+	</div>
+	<div class="container-fluid infobox">
+		<markdown content="point.content"></markdown>
+	</div>
+</fieldset>

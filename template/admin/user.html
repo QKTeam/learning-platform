@@ -1,0 +1,32 @@
+<h2>用户管理</h2><hr>
+<table class="table">
+	<tr>
+		<td><span class="glyphicon glyphicon-search"></span></td>
+		<td><input type="text" class="form-control input-sm" ng-model="searchKey.username"></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><input type="text" class="form-control input-sm" ng-model="searchKey.studentId"></td>
+		<td><select class="form-control input-sm" ng-model="searchKey.roleId" ng-options="role.rid as role.name for role in $root.roles"></select></td>
+		<td><a href="javascript:;" ng-click="clearSearchKey()"><span class="glyphicon glyphicon-remove"></span></a></td>
+	<tr>
+		<th>#</th>
+		<th>姓名</th>
+		<th>邮箱</th>
+		<th>联系电话</th>
+		<th>性别</th>
+		<th>学号</th>
+		<th>身份</th>
+		<th>#</th>
+	</tr>
+	<tr ng-repeat="user in users">
+		<td>{{user.uid}}</td>
+		<td>{{user.username}}</td>
+		<td><input type="text" class="form-control input-sm" ng-model="user.email"></td>
+		<td><input type="text" class="form-control input-sm" ng-model="user.phone"></td>
+		<td>{{user.gender?'女':'男'}}</td>
+		<td>{{user.studentId}}</td>
+		<td><select class="form-control input-sm" ng-model="user.roleId" ng-options="role.rid as role.name for role in $root.roles"></select></td>
+		<td><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok" ng-click="save(user)"></span></button></td>
+	</tr>
+</table>

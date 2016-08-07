@@ -1,8 +1,33 @@
-<div class="pull-right" ng-show="$root.sessionData.signin && $root.sessionData.user.roleId<=2">
-	<button type="button" class="btn btn-success btn-sm" ng-click="addCourse()">添加课程</button>
+<div class="pull-right" ng-show="$root.sessionData.signin && $root.sessionData.user.roleId==2">
+	<button type="button" class="btn btn-success btn-sm" ng-click="newCourse()">添加课程</button>
 </div>
 <div>
-	<span class="text-muted">老师：</span><code>{{$state.params.ownerId==0?'所有老师':$root.getUserBasicInfoByUid($state.params.ownerId).username}}</code>
-	<span class="text-muted">课程：</span><code>{{$state.params.name===''?'所有':$state.params.name}}</code>
+	<span class="text-muted">老师：</span>
+	<code>
+		<span>{{$state.params.ownerId==0?'所有老师':$root.getUserBasicInfoByUid($state.params.ownerId).username}}</span>
+		<span class="glyphicon glyphicon-remove cursor-pointer" ng-click="clearSearchKey('ownerId')" ng-hide="$state.params.ownerId==0"></span>
+	</code>
+	<span class="text-muted">课程：</span>
+	<code>
+		<span>{{$state.params.name===''?'所有':$state.params.name}}</span>
+		<span class="glyphicon glyphicon-remove cursor-pointer" ng-click="clearSearchKey('name')" ng-hide="$state.params.name==''"></span>
+	</code>
+	<a href="javascript:;" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span></a>
 </div>
 <hr>
+<div class="container-fluid"><div class="row">
+	<div class="col-sm-3" ng-repeat="course in courses">
+		<div class="panel" ng-class="{'panel-default':course.visibility,'panel-danger':!course.visibility}">
+			<div class="panel-heading">
+				<div class="pull-right text-muted" ng-show="!course.visibility">
+					<span class="glyphicon glyphicon-eye-close"></span>
+				</div>
+				<a ui-sref="course.show({cid:course.cid})" ng-class="{'text-muted':!course.visibility}">{{course.name}}</a>
+			</div>
+			<div class="panel-body courseIntroBox">{{course.content}}</div>
+			<div class="panel-footer" align="right">
+				<a ui-sref="course.search({ownerId:course.ownerId})">{{$root.getUserBasicInfoByUid(course.ownerId).username}}</a>
+			</div>
+		</div>
+	</div>
+</div></div>

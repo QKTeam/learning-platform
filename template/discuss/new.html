@@ -1,0 +1,25 @@
+<div class="container-fluid">
+	<h2 align="center">{{discuss.fatherId==0?'发布':'回复'}}讨论{{discuss.fatherId!=0?'#'+discuss.fatherId:''}}</h2><hr>
+	<div class="form-group">
+		<label>讨论标题</label>
+		<input class="form-control" ng-model="discuss.title">
+	</div>
+	<div class="form-group" ng-init="showTextarea=true">
+		<div class="pull-right">
+			<button type="button" class="btn btn-default btn-xs" ng-click="showTextarea=!showTextarea">
+				<span ng-show="showTextarea">显示预览</span>
+				<span ng-hide="showTextarea">关闭预览</span>
+			</button>
+		</div>
+		<label>讨论内容 <small class="text-muted">使用Markdown和MathJax渲染</small></label>
+		<div ng-show="showTextarea">
+			<textarea class="form-control" msd-elastic rows=2 ng-model="discuss.content"></textarea>
+		</div>
+		<div class="container-fluid infobox" ng-hide="showTextarea">
+			<markdown content="discuss.content"></markdown>
+		</div>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-warning fullwidth" ng-click="add()">{{discuss.fatherId==0?'发布':'回复'}}</button>
+	</div>
+</div>

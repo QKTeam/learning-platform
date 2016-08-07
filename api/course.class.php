@@ -38,7 +38,7 @@ class Course
 	public function findOwner($courseId)
 	{
 		global $pdo;
-		echo $courseId;
+		//echo $courseId;
 		$sqlCourse=$pdo->prepare('SELECT `ownerId` FROM `course` WHERE `cid` = :courseId;');
 		$sqlCourse->bindValue(':courseId',(int)($courseId),PDO::PARAM_INT);
 		$sqlCourse->execute();
@@ -68,6 +68,7 @@ class Course
 	{
 		global $pdo;
 
+		$nowRoleId = -1;
 		if(checkAuthority())
 		{
 			$nowUser=User::show(Site::getSessionUid());
@@ -84,10 +85,7 @@ class Course
 				$sqlCourse->execute();
 				$response=$sqlCourse->fetchall(PDO::FETCH_ASSOC);
 
-				if($response==false)
-					return false;
-				else
-					return $response;
+				return $response;
 			}
 			else if($nowRoleId==2)
 			{
@@ -106,12 +104,9 @@ class Course
 				//var_dump($response2);
 				
 
-				$response=array_merge($response1,$response2);
+				$response=array_merge($response2,$response1);
 
-				if($response=="")
-					return false;
-				else
-					return $response;
+				return $response;
 			}
 			else 
 			{
@@ -119,10 +114,58 @@ class Course
 				$sqlCourse->bindValue(':name','%'.urlencode($name).'%',PDO::PARAM_STR);
 				$sqlCourse->execute();
 				$response=$sqlCourse->fetchall(PDO::FETCH_ASSOC);
-				if($response==false)
-					return false;
-				else
-					return $response;	
+				
+				return $response;	
+			}
+		}
+		else 
+		{
+			if($nowRoleId==1)
+			{
+				$sqlCourse=$pdo->prepare('SELECT * FROM `course` WHERE `name` LIKE :name AND `ownerId`=:ownerId AND `visibility` <> -1;');
+				$sqlCourse->bindValue(':name','%'.urlencode($name).'%',PDO::PARAM_STR);
+				$sqlCourse->bindValue(':ownerId',(int)$ownerId,PDO::PARAM_INT);
+				$sqlCourse->execute();
+				$response=$sqlCourse->fetchall(PDO::FETCH_ASSOC);
+
+				return $response;
+			}
+			else if($nowRoleId==2)
+			{
+				if($ownerId==$nowId)
+				{
+					$sqlCourse=$pdo->prepare('SELECT * FROM `course` WHERE `name` LIKE :name AND `ownerId` = :nowUser AND `visibility` <> -1;');
+					$sqlCourse->bindValue(':name','%'.urlencode($name).'%',PDO::PARAM_STR);
+					$sqlCourse->bindValue(':nowUser',(int)($nowId),PDO::PARAM_INT);
+					$sqlCourse->execute();
+					$response=$sqlCourse->fetchall(PDO::FETCH_ASSOC);
+
+				}
+				else 
+
+				{
+					$sqlCourse=$pdo->prepare('SELECT * FROM `course` WHERE `name` LIKE :name AND `ownerId`==:ownerId AND `visibility`= 1;');
+					$sqlCourse->bindValue(':name','%'.urlencode($name).'%',PDO::PARAM_STR);
+					$sqlCourse->bindValue(':ownerId',(int)$ownerId,PDO::PARAM_INT);
+					$sqlCourse->execute();
+					$response=$sqlCourse->fetchall(PDO::FETCH_ASSOC);
+				}
+
+
+				//var_dump($response1);
+				//var_dump($response2);
+
+				return $response;
+			}
+			else 
+			{
+				$sqlCourse=$pdo->prepare('SELECT * FROM `course` WHERE `name` LIKE :name AND `ownerId`=:ownerId AND `visibility`= 1;');
+				$sqlCourse->bindValue(':name','%'.urlencode($name).'%',PDO::PARAM_STR);
+				$sqlCourse->bindValue(':ownerId',(int)$ownerId,PDO::PARAM_INT);
+				$sqlCourse->execute();
+				$response=$sqlCourse->fetchall(PDO::FETCH_ASSOC);
+				
+				return $response;	
 			}
 		}
 	}
@@ -201,13 +244,14 @@ class Course
 			$response=$sqlCourse->execute();
 		}
 		else if($nowRoleId==2)
-		{
+		{ 
+			
 			$sqlCourse=$pdo->prepare('UPDATE `course` SET  `visibility` = -1
 													WHERE `cid` = :cid AND `ownerId` = :nowId; ');
 			$sqlCourse->bindValue(':cid',(int)($cid),PDO::PARAM_INT);
 			$sqlCourse->bindValue(':nowId',(int)($nowId),PDO::PARAM_INT);
-			$response=$sqlCourse->execute();
-			
+			$sqlCourse->execute();
+			$response=$sqlCourse->rowCount();
 		}
 		else
 			$response=false;

@@ -9,10 +9,11 @@ if($action[1]=='show')
 	$nowRoleId=$nowUser[0]['roleId'];
 	$cid=getRequest('cid');
 	$response=Course::show($cid);
-	if($nowRoleId==1||($nowRoleId==2 && $response['ownerId']==$nowUser))
+	if($nowRoleId==1||($nowRoleId==2 && $response['ownerId']==$nowUser[0]['uid']))
 		$flag=1;
 	else 
 		$flag=0;
+
 	if($flag==1||$response['visibility']==true)
 	{
 		if($response==false)
@@ -26,13 +27,13 @@ if($action[1]=='show')
 			else 
 				$response['visibility']=false;
 
+
 			$response['cid']=(int)$response['cid'];
 			$response['ownerId']=(int)$response['ownerId'];
 			$response['createTime']=(int)$response['createTime'];
 			$response['updateTime']=(int)$response['updateTime'];
       		$response['name']=urldecode($response['name']);
       		$response['content']=urldecode($response['content']);
-      		$response['visibility']=(int)$response['visibility'];
 			handle('0000'.json_encode($response));
 		}
 	}
@@ -42,9 +43,9 @@ if($action[1]=='show')
 if($action[1]=='list')
 {
 	$response=Course::list(getRequest('ownerId'),getRequest('name'));
-	if($response==false)
+	if($response=="")
 	{
-		handle(ERROR_SYSTEM.'04');
+		handle('0000');
 	}
 	else 
 	{
@@ -60,13 +61,18 @@ if($action[1]=='list')
 		*/
       foreach ($response as &$i) 
       {
+      	if($i['visibility']==1)
+				$i['visibility']=true;
+			else 
+				$i['visibility']=false;
+
       	$i['cid']=(int)$i['cid'];
       	$i['ownerId']=(int)$i['ownerId'];
       	$i['createTime']=(int)$i['createTime'];
       	$i['updateTime']=(int)$i['updateTime'];
       	$i['name']=urldecode($i['name']);
       	$i['content']=urldecode($i['content']);
-      	$i['visibility']=(int)$i['visibility'];
+      	
       }
 		handle('0000'.json_encode($response));
 	}

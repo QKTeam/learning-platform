@@ -146,6 +146,14 @@ if($action[1]=='renew')
 	else 
 		handle('0000');
 }
+if($action[1]=='renewAdmin')
+{
+	$response=User::modifyAdmin(getRequest('uid'),getRequest('email'),getRequest('phone'),getRequest('roleId'));
+	if($response==false)
+		handle(ERROR_SYSTEM.'02');
+	else 
+		handle('0000');
+}
 if($action[1]=='signout')
 {		
 	Site::clearSession();

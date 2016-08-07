@@ -1,9 +1,9 @@
 <div class="pull-right">
-	<select class="form-control input-sm" ng-model="user.roleId" ng-options="role.rid as role.name for role in $root.roles" ng-disabled="!$root.sessionData.signin || $root.sessionData.user.roleId>2"></select>
+	<span class="text-muted"># {{user.uid}}</span>
 </div>
 <!-- {{user}} -->
 <fieldset>
-	<legend>{{user.username}} <small class="text-muted">#{{user.uid}}</small></legend>
+	<legend>{{user.username}} <small class="text-muted">@ {{user.roleName}}</small></legend>
 	<form class="form-horizontal" onsubmit="return false;">
 		<div class="form-group" ng-show="$root.sessionData.signin && ($root.sessionData.user.uid==user.uid || $root.sessionData.user.roleId<=2)">
 			<label for="inputOldPassword" class="col-sm-3 control-label">原密码</label>

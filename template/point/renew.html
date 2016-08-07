@@ -1,0 +1,46 @@
+<div class="container-fluid">
+	<div class="pull-right"><h2><small>#{{point.pid}}</small></h2></div>
+	<h2 align="center">修改详情</h2><hr>
+	<div class="form-group" align="right">
+		<div class="btn-group">
+			<label class="btn" ng-class="{'btn-default':!point.visibility,'btn-success':point.visibility}" ng-model="point.visibility" uib-btn-radio=false>隐藏</label>
+			<label class="btn" ng-class="{'btn-default':!point.visibility,'btn-success':point.visibility}" ng-model="point.visibility" uib-btn-radio=true>公开</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label>重要性</label>
+		<div class="btn-group">
+			<label class="btn" ng-class="{'btn-default':point.importance!=0,'btn-danger':point.importance==0}" ng-model="point.importance" uib-btn-radio=0>&nbsp;</label>
+			<label class="btn" ng-class="{'btn-default':point.importance!=1,'btn-danger':point.importance==1}" ng-model="point.importance" uib-btn-radio=1>!</label>
+			<label class="btn" ng-class="{'btn-default':point.importance!=2,'btn-danger':point.importance==2}" ng-model="point.importance" uib-btn-radio=2>!!</label>
+			<label class="btn" ng-class="{'btn-default':point.importance!=3,'btn-danger':point.importance==3}" ng-model="point.importance" uib-btn-radio=3>!!!</label>
+			<label class="btn" ng-class="{'btn-default':point.importance!=4,'btn-danger':point.importance==4}" ng-model="point.importance" uib-btn-radio=4>!!!!</label>
+			<label class="btn" ng-class="{'btn-default':point.importance!=5,'btn-danger':point.importance==5}" ng-model="point.importance" uib-btn-radio=5>!!!!!</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label>知识点</label>
+		<input class="form-control" ng-model="point.name">
+	</div>
+	<div class="form-group" ng-init="showTextarea=true">
+		<div class="pull-right">
+			<button type="button" class="btn btn-default btn-xs" ng-click="showTextarea=!showTextarea">
+				<span ng-show="showTextarea">显示预览</span>
+				<span ng-hide="showTextarea">关闭预览</span>
+			</button>
+		</div>
+		<label>知识描述 <small class="text-muted">使用Markdown和MathJax渲染</small></label>
+		<div ng-show="showTextarea">
+			<textarea class="form-control" msd-elastic rows=2 ng-model="point.content"></textarea>
+		</div>
+		<div class="container-fluid infobox" ng-hide="showTextarea">
+			<markdown content="point.content"></markdown>
+		</div>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-warning fullwidth" ng-click="save()">修改</button>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-danger fullwidth" ng-click="delete()">删除</button>
+	</div>
+</div>

@@ -1,0 +1,46 @@
+<h2>{{course.name}}</h2>
+<div class="pull-right" ng-show="$root.sessionData.signin && ($root.sessionData.user.roleId==1 || $root.sessionData.user.uid==course.ownerId)">
+	<button type="button" class="btn btn-info btn-sm" ng-click="modifyCourse()">修改详情</button>
+</div>
+<fieldset style="margin-bottom: 30px;">
+	<legend>课程信息</legend>
+	<div class="text-muted">
+		<span>课程创建时间：{{course.createTime * 1000 | date:'yyyy-MM-dd HH:mm'}}，</span>
+		<span>最后修改时间：{{course.updateTime * 1000 | date:'yyyy-MM-dd HH:mm'}}</span>
+	</div>
+	<div class="container-fluid infobox">
+		<markdown content="course.content"></markdown>
+	</div>
+</fieldset>
+<div class="pull-right" ng-show="$root.sessionData.signin && ($root.sessionData.user.roleId==1 || $root.sessionData.user.uid==course.ownerId)">
+	<button type="button" class="btn btn-danger btn-sm" ng-click="addPoint()">新增</button>
+</div>
+<fieldset style="margin-bottom: 30px;">
+	<legend>知识点列表</legend>
+	<div ng-repeat="point in points">
+		<code>{{point.importanceStr}}</code>
+		<a ui-sref="point.show({pid:point.pid})" ng-class="{'text-muted':!point.visibility}">{{point.name}}</a>
+	</div>
+</fieldset>
+<div class="pull-right">
+	<button type="button" class="btn btn-danger btn-sm" ng-click="addDiscuss(0)">发布讨论</button>
+</div>
+<fieldset style="margin-bottom: 30px;">
+	<legend>讨论区</legend>
+	<div class="panel panel-default" ng-repeat="discuss in discusses">
+		<div class="panel-heading">
+			<div class="pull-right" id="discuss-{{discuss.did}}">
+				<a href="javascript:;" ng-click="addDiscuss(discuss.did)">
+					<span class="glyphicon glyphicon-share-alt"></span>
+					<span>回复#{{discuss.did}}</span>
+				</a>
+			</div>
+			<div>
+				<span ng-show="discuss.fatherId!=0">回复<a href="#discuss-{{discuss.fatherId}}">#{{discuss.fatherId}}</a>：</span>
+				<span>{{discuss.title}}</span>
+			</div>
+		</div>
+		<div class="panel-body"><div class="container-fluid"><markdown content="discuss.content"></markdown></div></div>
+	</div>
+
+</fieldset>

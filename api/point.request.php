@@ -11,11 +11,10 @@ if($action[1]=='show')
 	$pid=getRequest('pid');
 	$response=Point::show($pid);
 
-	if($nowRoleId==1||($nowRoleId==2 && Course::findOwner($pid)==$nowUser))
+	if($nowRoleId==1||($nowRoleId==2 && Course::findOwner(Point::findCourse($pid))==$nowUser[0]['uid']))
 		$flag=1;
 	else 
 		$flag=0;
-
 
 	if($flag==1||$response['visibility']==true)
 	{
@@ -50,7 +49,7 @@ if($action[1]=='show')
 
 if($action[1]=='list')
 {
-	$response=Point::list(getRequest('ownerId'),getRequest('name'));
+	$response=Point::list(getRequest('courseId'),getRequest('name'));
 	foreach ($response as &$i) 
 	{
 			$i['pid']=(int)$i['pid'];

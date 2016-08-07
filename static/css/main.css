@@ -1,3 +1,25 @@
 .fullwidth {
 	width: 100%;
 }
+
+.courseIntroBox {
+	height: 160px;
+	word-break: break-all;
+	overflow-y: auto;
+}
+
+.infobox {
+	margin-top: 10px;
+	margin-left: 20px;
+	border-left: 5px solid #2894FF;
+	// border-radius: 10px;
+	padding: 10px;
+}
+
+textarea {
+	max-height: 370px;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}

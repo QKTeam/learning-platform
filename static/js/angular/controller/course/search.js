@@ -12,11 +12,24 @@ app.controller('course.search', ['$scope', '$rootScope', '$http', '$state', '$ui
 		});
 	}
 	$timeout(fetchCourseList, 0);
+	$scope.refresh = function () {
+		$timeout(fetchCourseList, 0);
+	}
 
-	$scope.addCourse = function () {
+	$scope.clearSearchKey = function (key) {
+		if(key == 'ownerId') {
+			searchKey.ownerId = 0;
+		}
+		else {
+			searchKey.name = '';
+		}
+		$state.go('course.search', searchKey);
+	}
+
+	$scope.newCourse = function () {
 		$uibModal.open({
-			templateUrl: '/template/course/add.html',
-			controller: 'course.add'
+			templateUrl: '/template/course/new.html',
+			controller: 'course.new'
 		});
 	}
 }]);
